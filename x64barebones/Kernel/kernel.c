@@ -50,7 +50,7 @@ void * initializeKernelBinary() {
 int main() {
 	load_idt();
 	while(1){
-		;
+    ;
 	}
 	return 0;
 }

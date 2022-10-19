@@ -1,4 +1,5 @@
 #include "./include/shell.h"
+#include "./include/functions.h"
 
 extern void divError();             // exception_test.asm
 extern void opCodeError();          // exception_test.asm
@@ -15,20 +16,20 @@ extern void opCodeError();          // exception_test.asm
 #define TOTAL_COMMANDS 8
 
 #define TOTAL_SPECIAL_KEYS 4
-static char specialKeys[] = {
-    PAUSE_SCREEN, ESCAPE_KEY
-};
+// static char specialKeys[] = {
+//     PAUSE_SCREEN, ESCAPE_KEY
+// };
 
 // // --- Comandos ---
-static char * commands[] = {
-    "game", "help", "time", "inforeg",
-    "div-error", "opcode-error", "printmem"
-};
+// static char * commands[] = {
+//     "game", "help", "time", "inforeg",
+//     "div-error", "opcode-error", "printmem"
+// };
 
-static uint64_t functions[] = {
-    (uint64_t) &game, (uint64_t)&help, (uint64_t)&time, (uint64_t)&inforeg,
-    (uint64_t) &divError, (uint64_t)&opCodeError, (uint64_t)&printmem
-};
+// static uint64_t functions[] = {
+//     (uint64_t) &game, (uint64_t)&help, (uint64_t)&time, (uint64_t)&inforeg,
+//     (uint64_t) &divError, (uint64_t)&opCodeError, (uint64_t)&printmem
+// };
 
 
 // #define REGISTER_PROGRAM(name, param, screen) \
@@ -46,34 +47,34 @@ static uint64_t functions[] = {
 
 // /* = = = = = = = = = CODIGO = = = = = = = = = */
 
-int parseCommands(char * string, char ** words){         // noto las posiciones de la palabra en words
-    int count=0;
-    int i=0;
-    for(int postSpace=1; string[i]!=0 && string[i]!='\n'; i++){
-        if(string[i]==' '){
-            postSpace = 1;
-            string[i] = 0;                         // corto el string original en los espacios
-        }
-        else if(postSpace){
-            words[count++] = string + i;
-            postSpace = 0;
-        }
-    }
-    string[i] = 0;                              // elimino el \n final
-    return count;                               // cantidad de palabras tokenizadas
-}
+// int parseCommands(char * string, char ** words){         // noto las posiciones de la palabra en words
+//     int count=0;
+//     int i=0;
+//     for(int postSpace=1; string[i]!=0 && string[i]!='\n'; i++){
+//         if(string[i]==' '){
+//             postSpace = 1;
+//             string[i] = 0;                         // corto el string original en los espacios
+//         }
+//         else if(postSpace){
+//             words[count++] = string + i;
+//             postSpace = 0;
+//         }
+//     }
+//     string[i] = 0;                              // elimino el \n final
+//     return count;                               // cantidad de palabras tokenizadas
+// }
 
 
 // devuelve la posicion en el array de punteros a funciones
 // o -1 si no dio ninguno
-unsigned int checkCommand(char * string, char ** array, unsigned int dim){
-    for(int i=0; i<dim; i++){
-        if(strcmp(string, array[i])==0){
-            return i;
-        }
-    }
-    return -1;
-}
+// unsigned int checkCommand(char * string, char ** array, unsigned int dim){
+//     for(int i=0; i<dim; i++){
+//         if(strcmp(string, array[i])==0){
+//             return i;
+//         }
+//     }
+//     return -1;
+// }
 
 // // retorna la primera key especial que encuentra
 // char findSpecialKey(char * string, char * keys, unsigned int size){

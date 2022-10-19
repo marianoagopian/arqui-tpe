@@ -16,5 +16,9 @@
 #define STDERR_COLOR 4
 
 void ncClear();
+void deleteKey(unsigned int * offset, unsigned int start,  unsigned int length , unsigned int step);
+unsigned int write(const char * buf, char format, unsigned int count, unsigned int * offset, unsigned int start,  unsigned int length , unsigned int step);
+unsigned int writeDispatcher(unsigned int fd, const char * buf, unsigned int count);
+unsigned int readDispatcher(unsigned int fd, const char * buf, unsigned int count);
 
 #endif

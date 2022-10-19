@@ -100,7 +100,7 @@ unsigned int read_stdin(unsigned int fd, char * buf, unsigned int count) {
 	return i;
 }
 
-unsigned int readDispatcher(unsigned int fd, char * buf, unsigned int count) {
+unsigned int readDispatcher(unsigned int fd, const char * buf, unsigned int count) {
   if(checkIfAvailableKey())
     return consume_kb_buffer(buf,count);		// Si el key buffer no esta vacio, primero tengo que consumirlo
   return read_stdin(fd, buf, count);				// El buffer esta vacio, puedo leer de pantalla
