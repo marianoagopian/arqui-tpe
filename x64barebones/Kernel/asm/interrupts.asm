@@ -18,7 +18,7 @@ GLOBAL _exception0Handler
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
-EXTERN swIntDispatcher
+EXTERN write
 
 SECTION .text
 
@@ -109,11 +109,11 @@ picMasterMask:
 
 picSlaveMask:
 	push    rbp
-  mov     rbp, rsp
-  mov     ax, di  ; ax = mascara de 16 bits
-  out		0A1h, al
-  pop     rbp
-  retn
+    mov     rbp, rsp
+    mov     ax, di  ; ax = mascara de 16 bits
+    out		0A1h, al
+    pop     rbp
+    retn
 
 
 ;8254 Timer (Timer Tick)
@@ -142,18 +142,15 @@ _irq05Handler:
 
 ;Syscall
 _irq80Handler:
-  push r9
-  mov r9, r8
-  mov r8, r10
-  mov rcx, rdx
-  mov rdx, rsi
-  mov rsi, rdi
-  mov rdi, rax 
-
-  call swIntDispatcher 
-  pop r9
-
-  iretq
+	push rbp
+    mov rbp, rsp   
+    cmp rax, 1
+	jne .continue
+	call write
+	.continue
+	mov rsp, rbp
+	pop rbp
+    iretq
 
 ;Zero Division Exception
 _exception0Handler:
@@ -164,8 +161,6 @@ haltcpu:
 	hlt
 	ret
 
-
-; Interrupciones de software
 
 
 SECTION .bss

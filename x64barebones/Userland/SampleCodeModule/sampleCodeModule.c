@@ -1,15 +1,19 @@
 /* sampleCodeModule.c */
-#include "../include/shell.h"
-#include "../include/functions.h"
+
+char * v = (char*)0xB8000 + 79 * 2;
+
+static int var1 = 0;
+static int var2 = 0;
 
 
 int main() {
 	//All the following code may be removed 
-  puts("\n\n Pasando a userSpace");
+	*v = 'X';
+	*(v+1) = 0x74;
 
-  for(int k=0; k<500000000; k++)
 	//Test if BSS is properly set up
+	if (var1 == 0 && var2 == 0)
+		return 0xDEADC0DE;
 
-  shell();
-  return 1;
+	return 0xDEADBEEF;
 }
