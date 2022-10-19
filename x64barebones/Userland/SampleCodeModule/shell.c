@@ -15,20 +15,20 @@ extern void opCodeError();          // exception_test.asm
 #define TOTAL_COMMANDS 8
 
 #define TOTAL_SPECIAL_KEYS 4
-// static char specialKeys[] = {
-//     PAUSE_RIGHT_SCREEN, PAUSE_LEFT_SCREEN, PAUSE_NORMAL_SCREEN, ESCAPE_KEY
-// };
+static char specialKeys[] = {
+    PAUSE_SCREEN, ESCAPE_KEY
+};
 
 // // --- Comandos ---
-// static char * commands[] = {
-//     "fibonacci", "primos", "help", "time", "inforeg",
-//     "div-error", "opcode-error", "printmem"
-// };
+static char * commands[] = {
+    "game", "help", "time", "inforeg",
+    "div-error", "opcode-error", "printmem"
+};
 
-// static uint64_t functions[] = {
-//     (uint64_t) &fibonacci, (uint64_t)&primos, (uint64_t)&help, (uint64_t)&time, (uint64_t)&inforeg,
-//     (uint64_t) &divError, (uint64_t)&opCodeError, (uint64_t)&printmem
-// };
+static uint64_t functions[] = {
+    (uint64_t) &game, (uint64_t)&help, (uint64_t)&time, (uint64_t)&inforeg,
+    (uint64_t) &divError, (uint64_t)&opCodeError, (uint64_t)&printmem
+};
 
 
 // #define REGISTER_PROGRAM(name, param, screen) \
@@ -43,51 +43,37 @@ extern void opCodeError();          // exception_test.asm
 //                 }                                                           \
 //                 break;                                                      \
 
-// #define REGISTER_DUAL_PROGRAMS(name1, name2, param1, param2, screen1, screen2) \
-//                 pos1 = checkCommand(name1, commands, TOTAL_COMMANDS);       \
-//                 pos2 = checkCommand(name2, commands, TOTAL_COMMANDS);       \
-//                 if(pos2 >= 0 && pos2 >=0){                                  \
-//                     sys_clear_screen();                                     \
-//                     pid1 = sys_register_process(functions[pos1], screen1, (uint64_t) param1); \
-//                     pid2 = sys_register_process(functions[pos2], screen2, (uint64_t) param2); \
-//                 }                                                           \
-//                 else{                                                       \
-//                     puts(INVALID_COMMAND_MSG);                              \
-//                     return;                                                 \
-//                 }                                                           \
-//                 break;                                                      \
-
 
 // /* = = = = = = = = = CODIGO = = = = = = = = = */
 
-// int parseCommands(char * string, char ** words){         // noto las posiciones de la palabra en words
-//     int count=0;
-//     int i=0;
-//     for(int postSpace=1; string[i]!=0 && string[i]!='\n'; i++){
-//         if(string[i]==' '){
-//             postSpace = 1;
-//             string[i] = 0;                         // corto el string original en los espacios
-//         }
-//         else if(postSpace){
-//             words[count++] = string + i;
-//             postSpace = 0;
-//         }
-//     }
-//     string[i] = 0;                              // elimino el \n final
-//     return count;                               // cantidad de palabras tokenizadas
-// }
+int parseCommands(char * string, char ** words){         // noto las posiciones de la palabra en words
+    int count=0;
+    int i=0;
+    for(int postSpace=1; string[i]!=0 && string[i]!='\n'; i++){
+        if(string[i]==' '){
+            postSpace = 1;
+            string[i] = 0;                         // corto el string original en los espacios
+        }
+        else if(postSpace){
+            words[count++] = string + i;
+            postSpace = 0;
+        }
+    }
+    string[i] = 0;                              // elimino el \n final
+    return count;                               // cantidad de palabras tokenizadas
+}
 
 
-// // devuelve la posicion en el array de punteros a funciones
-// // o -1 si no dio ninguno
-// unsigned int checkCommand(char * string, char ** array, unsigned int dim){
-//     for(int i=0; i<dim; i++){
-//         if(strcmp(string, array[i])==0){
-//             return i;
-//         }
-//     }
-//     return -1;
-// }
+// devuelve la posicion en el array de punteros a funciones
+// o -1 si no dio ninguno
+unsigned int checkCommand(char * string, char ** array, unsigned int dim){
+    for(int i=0; i<dim; i++){
+        if(strcmp(string, array[i])==0){
+            return i;
+        }
+    }
+    return -1;
+}
 
 // // retorna la primera key especial que encuentra
 // char findSpecialKey(char * string, char * keys, unsigned int size){

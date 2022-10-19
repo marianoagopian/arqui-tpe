@@ -3,6 +3,14 @@
 
 #include "./syscalls.h"
 
+/* --- CONSTANTS  --- */
+#define SCREEN 1
+
+// --- Caracteres especiales ---
+#define PAUSE_SCREEN 17
+#define ESCAPE_KEY 27
+
+
 void realTime();
 
 int scanf(char * format, char * dest);

@@ -49,7 +49,6 @@ void * initializeKernelBinary() {
 
 int main() {
 	load_idt();
-  ncClear();
 	while(1){
 		;
 	}
