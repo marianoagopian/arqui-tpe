@@ -170,3 +170,44 @@ make all
 clear
 make all
 make all
+cd root/x64barebones/
+ls
+make all
+cd Toolchain/
+make clean
+make all
+cd ../
+make clean
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make clean
+make all
+clear
+make all
+clear
+make all
+make all
+cd Toolchain/
+make all
+cd ModulePacker/
+chmod 777 mp.bin 
+cd ..
+cd ..
+make all
+make all
+make all
+make all
+make all
+make all
+cd Toolchain/
+make clean
+make all
+cd ../
+make clean
+make all
+make all
