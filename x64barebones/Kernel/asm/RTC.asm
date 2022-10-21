@@ -1,7 +1,9 @@
 GLOBAL _NRTCGetHours
 GLOBAL _NRTCGetMins
 GLOBAL _NRTCGetSeconds
+
 section .text
+
 _NRTCGetHours:
 mov rax, 4
 call _RTC

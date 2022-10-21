@@ -54,6 +54,10 @@ uint16_t scr_getWidth(void) {
     return screenData->width;
 }
 
+void scr_setPenColor(Color color) {
+  penColor = color;
+}
+
 uint16_t scr_getHeight(void) {
     return screenData->height;
 }
@@ -92,16 +96,16 @@ void scr_printChar(char c) {
 	    const char* data = font + 32*(c-33);
 	    for (int h=0; h<16; h++) {
     		Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-    		if (*data & 0b00000001) pos[0] = penColor;
-    		if (*data & 0b00000010) pos[1] = penColor;
-    		if (*data & 0b00000100) pos[2] = penColor;
-    		if (*data & 0b00001000) pos[3] = penColor;
-    		if (*data & 0b00010000) pos[4] = penColor;
-    		if (*data & 0b00100000) pos[5] = penColor;
-    		if (*data & 0b01000000) pos[6] = penColor;
-    		if (*data & 0b10000000) pos[7] = penColor;
+    		if (*data & 0x01) pos[0] = penColor;
+    		if (*data & 0x02) pos[1] = penColor;
+    		if (*data & 0x04) pos[2] = penColor;
+    		if (*data & 0x08) pos[3] = penColor;
+    		if (*data & 0x10) pos[4] = penColor;
+    		if (*data & 0x20) pos[5] = penColor;
+    		if (*data & 0x40) pos[6] = penColor;
+    		if (*data & 0x80) pos[7] = penColor;
     		data++;
-    		if (*data & 0b00000001) pos[8] = penColor;
+    		if (*data & 0x01) pos[8] = penColor;
     		data++;
     	}
     }
@@ -124,4 +128,16 @@ void scr_printNewline(void) {
         memcpy(dst, src, len);
         memset(dst+len, 0, 3 * (uint64_t)screenData->width * CHAR_HEIGHT);
     }
+}
+
+uint32_t scr_print(const char* s) {
+    for (; *s != 0; s++)
+		  scr_printChar(*s);
+    return penX | ((uint32_t)penY << 16);
+}
+
+uint32_t scr_println(const char* s) {
+    scr_print(s);
+    scr_printNewline();
+    return penX | ((uint32_t)penY << 16);
 }

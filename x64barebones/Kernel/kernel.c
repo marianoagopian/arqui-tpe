@@ -2,7 +2,6 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <naiveConsole.h>
 #include <naiveRTC.h>
 #include <idtLoader.h>
 #include <time.h>
@@ -51,6 +50,9 @@ int main() {
 	load_idt();
   scr_clear();
   scr_printChar('h');
+  scr_printChar('a');
+  scr_printChar('m');
+  scr_printChar('\b');
 	while(1){
 		;
 	}

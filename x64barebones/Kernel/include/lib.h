@@ -10,6 +10,4 @@ int _strlen(const char * str);
 
 char *cpuVendor(char *result);
 
-void sys_write(unsigned int fd, char *buf, int count);
-
 #endif

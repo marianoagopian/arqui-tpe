@@ -211,3 +211,47 @@ cd ../
 make clean
 make all
 make all
+cd root/x64barebones/
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+clear
+make clean
+clear
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+exit
+ls
+make clean
+cd root/x64barebones/
+make clean
+make all
+make all
+make all
+make all
+make clear
+make clean
+make all
+make all
+make all
+make all
+make all

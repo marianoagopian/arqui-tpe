@@ -12,9 +12,10 @@ GLOBAL _irq02Handler
 GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
-GLOBAL _irq80Handler
+; GLOBAL _irq80Handler
 
 GLOBAL _exception0Handler
+GLOBAL getKey
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
@@ -101,19 +102,19 @@ _sti:
 
 picMasterMask:
 	push rbp
-    mov rbp, rsp   
-    mov ax, di
-    out	21h,al
-    pop rbp
-    retn
+  mov rbp, rsp
+  mov ax, di
+  out	21h,al
+  pop rbp
+  retn
 
 picSlaveMask:
 	push    rbp
-    mov     rbp, rsp
-    mov     ax, di  ; ax = mascara de 16 bits
-    out		0A1h, al
-    pop     rbp
-    retn
+  mov     rbp, rsp
+  mov     ax, di  ; ax = mascara de 16 bits
+  out		0A1h, al
+  pop     rbp
+  retn
 
 
 ;8254 Timer (Timer Tick)
@@ -140,17 +141,17 @@ _irq04Handler:
 _irq05Handler:
 	irqHandlerMaster 5
 
-;Syscall
-_irq80Handler:
-	push rbp
-    mov rbp, rsp   
-    cmp rax, 1
-	jne .continue
-	call write
-	.continue
-	mov rsp, rbp
-	pop rbp
-    iretq
+; ;Syscall
+; _irq80Handler:
+; 	push rbp
+;   mov rbp, rsp
+;   cmp rax, 1
+; 	jne .continue
+; 	call write
+; 	.continue
+; 	mov rsp, rbp
+; 	pop rbp
+;   iretq
 
 ;Zero Division Exception
 _exception0Handler:
@@ -160,8 +161,6 @@ haltcpu:
 	cli
 	hlt
 	ret
-
-
 
 SECTION .bss
 	aux resq 1
