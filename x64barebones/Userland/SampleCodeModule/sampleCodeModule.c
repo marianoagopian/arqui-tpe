@@ -1,19 +1,23 @@
 /* sampleCodeModule.c */
+#include <stdint.h>
+#include <color.h>
+#include <syscalls.h>
+#include <functions.h>
 
-char * v = (char*)0xB8000 + 79 * 2;
+uint32_t width, height;
 
-static int var1 = 0;
-static int var2 = 0;
+#define BUFFER_LENGTH 32
 
+static char * newLine = "$>:";
 
 int main() {
-	//All the following code may be removed 
-	*v = 'X';
-	*(v+1) = 0x74;
+	clearscreen();	
 
-	//Test if BSS is properly set up
-	if (var1 == 0 && var2 == 0)
-		return 0xDEADC0DE;
-
-	return 0xDEADBEEF;
+	print("Welcome to Shell! Type \"HELP\" for a list of commands.\n\n", 55);
+	while(1) {
+		print(newLine, strlen(newLine));
+		char readBuffer[BUFFER_LENGTH] = {0};
+		scanf(readBuffer, BUFFER_LENGTH);
+		// getChar();
+	}
 }

@@ -12,14 +12,18 @@ GLOBAL _irq02Handler
 GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
-; GLOBAL _irq80Handler
+GLOBAL _irq80Handler
 
 GLOBAL _exception0Handler
 GLOBAL getKey
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
-EXTERN write
+EXTERN sysWrite
+EXTERN sysRead
+EXTERN sysClear
+EXTERN sysScreenSize
+EXTERN sysWriteAt
 
 SECTION .text
 
@@ -141,17 +145,46 @@ _irq04Handler:
 _irq05Handler:
 	irqHandlerMaster 5
 
-; ;Syscall
-; _irq80Handler:
-; 	push rbp
-;   mov rbp, rsp
-;   cmp rax, 1
-; 	jne .continue
-; 	call write
-; 	.continue
-; 	mov rsp, rbp
-; 	pop rbp
-;   iretq
+;Syscall
+_irq80Handler:
+	push rbp
+	mov rbp, rsp
+	cmp rax, 0
+	je sys_read
+	cmp rax, 1
+	je sys_write
+	cmp rax, 4
+	je sys_clear_screan
+	cmp rax, 5
+	je sys_write_at
+	cmp rax, 6
+	je sys_screen_size
+	jmp continue
+
+continue:
+	mov rsp, rbp
+	pop rbp
+	iretq
+
+sys_read:
+call sysRead
+jmp continue
+
+sys_write:
+call sysWrite
+jmp continue
+
+sys_clear_screan:
+call sysClear
+jmp continue
+
+sys_write_at:
+call sysWriteAt
+jmp continue
+
+sys_screen_size:
+call sysScreenSize
+jmp continue
 
 ;Zero Division Exception
 _exception0Handler:

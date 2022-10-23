@@ -1,0 +1,70 @@
+#include <keyboard.h>
+#include <video.h>
+#include <defs.h>
+#include <lib.h>
+#include <interrupts.h>
+
+int sysWrite(int fd, char * buf, int count) {
+  if(fd != STDERR && fd != STDOUT) {
+    return 0;
+  }
+  if (fd == STDERR) {
+    scr_setPenColor((Color){0x00, 0x00, 0xFF});
+  }
+	for (int i = 0; i < count; i++)
+		scr_printChar(buf[i]);
+	scr_setPenColor((Color){0x7F, 0x7F, 0x7F});
+	
+	return count;
+}
+
+uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) {
+	scr_setPenPosition(x, y);
+	scr_setPenColor(color);
+	for (int i = 0; i < count; i++)
+		scr_printChar(buf[i]);
+	return scr_getPenX() | ((uint32_t)scr_getPenY() << 16);
+}
+
+void sysClear() {
+  scr_clear();
+}
+
+int sysScreenSize() {
+  return scr_getWidth() | scr_getHeight() << 32;
+}
+
+unsigned int sysRead(unsigned int fd, char * buf, unsigned int count) {
+	char c = 0, keyboardResp = 0; 
+	int i = 0;
+
+	/*if(checkIfAvailableKey()) {
+		consume_kb_buffer(buf, count);
+	}*/
+	while(c != '\n' && keyboardResp != BUFFER_FULL) {
+		
+		keyboardResp = keyboard_handler();
+
+		if(keyboardResp == VALID_KEY) {
+			//c = peek_key();
+			//scr_printChar(c);
+		
+			if(i<count) {
+				i++;
+			}
+		}
+		else if(keyboardResp == DELETE_KEY) {
+				//scr_printChar('\b');
+				if(i > 0) {
+					i--;
+				}
+			}
+	}
+
+	/*for(int j=0 ; j < i ; j++) {				// consumo el buffer de una, hasta el \n o fin de caracteres
+		buf[j] = get_key();
+	}*/
+
+	return i;
+}
+

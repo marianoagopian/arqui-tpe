@@ -54,6 +54,15 @@ uint16_t scr_getWidth(void) {
     return screenData->width;
 }
 
+void scr_setPenPosition(uint16_t x, uint16_t y) {
+    // We clamp the pen (x,y) to ensure there is enough space to draw a char in that position.
+    uint16_t maxX = screenData->width - CHAR_WIDTH;
+    uint16_t maxY = screenData->height - CHAR_HEIGHT;
+
+    penX = x < maxX ? x : maxX;
+    penY = y < maxY ? y : maxY;
+}
+
 void scr_setPenColor(Color color) {
   penColor = color;
 }
@@ -86,9 +95,36 @@ void scr_setPixel(uint16_t x, uint16_t y, Color color) {
     *pos = color;
 }
 
+void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
+    if (x >= screenData->width || y >= screenData->height)
+        return;
+    
+    uint16_t maxWidth = screenData->width - x;
+    if (width > maxWidth) width = maxWidth;
+    
+    uint16_t maxHeight = screenData->height - y;
+    if (height > maxHeight) height = maxHeight;
+
+    Color* ptr = (Color*)getPtrToPixel(x, y);
+    unsigned int adv = screenData->width - width;
+    for (int i=0; i<height; i++) {
+        for (int c=0; c<width; c++)
+            *(ptr++) = color;
+        ptr += adv;
+    }
+}
+
 void scr_printChar(char c) {
     if (c == '\n') {
         scr_printNewline();
+        return;
+    }
+
+    Color black = {0x00, 0x00, 0x00};
+
+    if (c == '\b') {
+        penX -= CHAR_WIDTH;
+        scr_drawRect(penX, penY, 9, 16, black);
         return;
     }
 

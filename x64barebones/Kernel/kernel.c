@@ -7,6 +7,7 @@
 #include <time.h>
 #include <defs.h>
 #include "./include/video.h"
+#include "./include/syscalls.h"
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -48,13 +49,14 @@ void * initializeKernelBinary() {
 
 int main() {
 	load_idt();
-  scr_clear();
-  scr_printChar('h');
-  scr_printChar('a');
-  scr_printChar('m');
-  scr_printChar('\b');
+	scr_clear();
+	sysWrite(STDERR, "Probando error", 20);
+	sysWrite(STDOUT, "Probando normal", 20);
+
+	((EntryPoint)sampleCodeModuleAddress)();
+
 	while(1){
-		;
+		_hlt();
 	}
 	return 0;
 }
