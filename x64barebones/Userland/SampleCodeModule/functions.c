@@ -68,7 +68,14 @@ void scanf(char* readbuf, uint64_t maxlen) {
             readbuf[MIN(count, maxlen-1)] = '\0';
             print(&c, 1);
             return;
-        } /* if (c == '\b') { //If a '\b' character is found, we remove the last char from readbuf.
+        } 
+        if (c == '\b'){
+            if (count != 0){
+                count--;
+            }
+            print(&c, 1);
+        } 
+        /* if (c == '\b') { //If a '\b' character is found, we remove the last char from readbuf.
             if (count != 0) {
                 count--;
                 uint32_t penX = penpos & 0x0000FFFF;
@@ -98,4 +105,13 @@ int strlen(const char * str) {
 		ans++;
 	}
     return ans;
+}
+
+int strcmp(const char* str1, const char* str2) { // Devuelve 0 si son iguales, -1 sino. Los otros casos no nos importan.
+	for (; *str1 != '\0' && *str2 != '\0'; str1++, str2++) {
+        if (*str1 != *str2) {
+            return -1;
+        }
+    }
+	return 0;
 }

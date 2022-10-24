@@ -4,7 +4,7 @@
 #include <interrupts.h>
 #include <lib.h>
 
-static const uint8_t scanCodeTable[256] = {
+static const char scanCodeTable[256] = {
     0,    0,  '1',  '2',  '3',  '4',  '5',  '6',   '7',  '8',  '9',   '0',   '-',  '=',    '\b',
     '    ', 'Q',  'W',  'E',  'R',  'T',  'Y',  'U',  'I',   'O',  'P',  '[',   ']',  '\n',
     0,     'A',  'S', 'D',  'F',  'G',  'H',  'J',  'K',  'L',  ';',  '\'',
