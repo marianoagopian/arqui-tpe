@@ -255,3 +255,29 @@ make all
 make all
 make all
 make all
+cd root/x64barebones/
+ls
+clear
+make all
+make clean
+make all
+make clean
+make all
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+clear
+make clean
+make all
+make all
+git st
+make clean
+git st
+make clean
+clear
+make all
+make all
