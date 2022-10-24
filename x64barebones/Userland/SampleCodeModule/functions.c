@@ -3,6 +3,10 @@
 #include <functions.h>
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define REGISTERS 15
+#define REGISTER_LENGTH 16
+#define BUFF_SIZE 20
+
 
 static uint32_t penpos = 0;
 
@@ -19,11 +23,11 @@ void putchar(char c) {
 }
 
 void print(const char* buf, uint64_t count) {
-    penpos = _sys_write(STDOUT, buf, count);  // arreglar el tema del color
+    penpos = sys_write(STDOUT, buf, count);  // arreglar el tema del color
 }
 
 void clearscreen() {
-    sys_clearscreen();
+    sys_clear_screen();
     penpos = 0;
 }
 
@@ -74,7 +78,7 @@ void scanf(char* readbuf, uint64_t maxlen) {
                 count--;
             }
             print(&c, 1);
-        } 
+        }
         /* if (c == '\b') { //If a '\b' character is found, we remove the last char from readbuf.
             if (count != 0) {
                 count--;
@@ -82,7 +86,7 @@ void scanf(char* readbuf, uint64_t maxlen) {
                 uint32_t penY = penpos >> 16;
                 if (penX < 9) {
                     if (penY != (uint32_t)0) penY -= 16;
-                    penX = ((sys_screensize() & 0xFFFFFFFF) / 9 - 1) * 9;
+                    penX = ((sys_screen_size() & 0xFFFFFFFF) / 9 - 1) * 9;
                 } else {
                     penX -= 9;
                 }
@@ -114,4 +118,53 @@ int strcmp(const char* str1, const char* str2) { // Devuelve 0 si son iguales, -
         }
     }
 	return 0;
+}
+
+static char * registerOrder[] = {
+    "RAX: ","RBX: ","RCX: ","RDX: ",
+    "RBP: ","RSI: ","RDI: ","R8: ", 
+    "R9: ","R10: ","R11: ","R12: ",
+    "R13: ","R14: ","R15: "
+};
+
+static void reverseString(char * string, int length) {
+    char aux;
+    for(int i = 0, j = length - 1; i < j ; i++, j--) {
+        aux = string[i];
+        string[i] = string[j];
+        string[j] = aux;
+    }
+}
+
+static int hexToString(uint64_t num, char * buffer, int fixedLength) {
+    int i = 0;
+
+    for(int aux ; num > 0 ; i++, num/=16){
+        aux = num % 16;
+        if(aux >=0 && aux < 10)                     // convierto a hex
+            buffer[i] = aux + '0';
+        else
+            buffer[i] = aux - 10 + 'A';
+
+    }
+    while(i<fixedLength) {                   // le agrego 0 por deltante para llegar a la longitud deseada
+        buffer[i++] = '0';
+    }
+    reverseString(buffer,i);
+    buffer[i] = 0;
+
+    return i;
+}
+
+void infoReg() {
+    char stringBuffer[BUFF_SIZE];
+    uint64_t regBuffer[REGISTERS];
+
+    sys_info_reg(regBuffer);
+    for(int i = 0 ; i < REGISTERS ; i++) {
+        hexToString(regBuffer[i], stringBuffer, REGISTER_LENGTH);
+        print(registerOrder[i], strlen(registerOrder[i]));
+        print(stringBuffer, BUFF_SIZE);
+        print("\n", 2);
+    }
 }

@@ -4,6 +4,8 @@
 #include <lib.h>
 #include <interrupts.h>
 
+static uint64_t infoReg[REGISTERS] = {0};
+
 int sysWrite(int fd, char * buf, int count) {
   if(fd != STDERR && fd != STDOUT) {
     return 0;
@@ -76,4 +78,16 @@ unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
 		} while (totalRead == 0);
 
 	return totalRead;
+}
+
+void saveInfoReg(uint64_t * regDumpPos) {
+	for(int i = 0 ; i < REGISTERS ; i++) {
+		infoReg[i] = regDumpPos[i];
+	}
+}
+
+void sysInfoReg(uint64_t * buffer) {
+	for(int i = 0 ; i < REGISTERS ; i++) {
+		buffer[i] = infoReg[i];
+	}
 }

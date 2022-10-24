@@ -116,6 +116,9 @@ void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color
 }
 
 void scr_printChar(char c) {
+    if(c == 0){
+        return;
+    }
     if (c == '\n') {
         scr_printNewline();
         return;

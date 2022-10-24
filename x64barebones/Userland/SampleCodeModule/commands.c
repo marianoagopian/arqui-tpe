@@ -29,10 +29,6 @@ static void invalidCommand() {
 	print(INVALID_COMMAND_MSG, strlen(INVALID_COMMAND_MSG));
 }
 
-static void help() {
-	print(HELP_MSG, strlen(HELP_MSG));
-}
-
 void callFunction(char * command, char * parameter) {
 	int functionIndex = -1;
 	int i;
@@ -54,9 +50,9 @@ void callFunction(char * command, char * parameter) {
 	// case 3:
 	// 	increaseFontSize();
 	// 	break;
-	// case 4:
-	// 	inforeg();
-	// 	break;
+	case 4:
+		infoReg();
+		break;
 	// case 5:
 	// 	invalidOperationCode();
 	// 	break;

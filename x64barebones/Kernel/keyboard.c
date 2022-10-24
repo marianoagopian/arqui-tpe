@@ -7,8 +7,8 @@
 static const char scanCodeTable[256] = {
     0,    0,  '1',  '2',  '3',  '4',  '5',  '6',   '7',  '8',  '9',   '0',   '-',  '=',    '\b',
     '    ', 'Q',  'W',  'E',  'R',  'T',  'Y',  'U',  'I',   'O',  'P',  '[',   ']',  '\n',
-    0,     'A',  'S', 'D',  'F',  'G',  'H',  'J',  'K',  'L',  ';',  '\'',
-    0,    0,  '\\',   'Z',  'X',     'C', 'V', 'B',  'N',  'M',  ',',  '.',  '/',    0,
+    0,     'A',  'S', 'D',  'F',  'G',  'H',  'J',  'K',  'L',  SHIFT,  '\'',
+    0,    0,  SHIFT,   'Z',  'X',     'C', 'V', 'B',  'N',  'M',  ',',  '.',  '/',    0,
     '*',     0,  ' ',    0,     0,     0,    0,       0,         0,
 };
 
@@ -34,6 +34,11 @@ static int peekPos;			        // Posicion para observar en el buffer
 void  keyboard_handler(uint64_t * regDumpPos) {
 
 	int c = getKey();
+
+	if (scanCodeTable[c] == SHIFT) {
+		saveInfoReg(regDumpPos);
+		return;
+	}
     
 	// if(c == F5_SCAN_CODE)
 	// 	saveInfoReg(regDumpPos);	// caso: aprienta boton de captura de registros
@@ -69,52 +74,6 @@ void  keyboard_handler(uint64_t * regDumpPos) {
 	}*/
 	if(writePos < BUFFER_SIZE)
 		keyBuffer[writePos++]=c;
-}
-
-/* Consumo letra del buffer y sobreescribe con 0 para denotar una posicion vacia. */
-char get_key()
-{
-	if(!checkIfAvailableKey())
-		return 0;
-
-	if(peekPos == readPos)          	// para que el peek no quede apuntando a nada
-		INCREASE_MOD(peekPos,BUFFER_SIZE)	
-
-	char c = keyBuffer[readPos];		// consumo letra 
-	keyBuffer[readPos] = 0;
-
-	INCREASE_MOD(readPos,BUFFER_SIZE)
-	
-	return c;
-}
-
-
-/* Como el get_key pero no lo consumo, es decir, no pone en 0 sino que lo deja. */
-char peek_key()
-{
-	if(keyBuffer[peekPos]==0)		// corto sin aumentar
-		return 0;
-
-	char c = keyBuffer[peekPos];
-	INCREASE_MOD(peekPos,BUFFER_SIZE)	
-	return c;
-}
-
-
-unsigned int consume_kb_buffer(char * buf, unsigned int count) 
-{
-	int i=0;
-	
-	while(checkIfAvailableKey() && i<count) {
-		char c = get_key();
-		buf[i++] = c;
-	}
-	return i;
-}
-
-
-char checkIfAvailableKey() {
-	return keyBuffer[readPos] != 0;
 }
 
 unsigned int kbd_readCharacters(char* buf, unsigned int n) {

@@ -24,6 +24,7 @@ EXTERN sysRead
 EXTERN sysClear
 EXTERN sysScreenSize
 EXTERN sysWriteAt
+EXTERN sysInfoReg
 
 SECTION .text
 
@@ -67,6 +68,7 @@ SECTION .text
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi, rsp ; puntero a principio de dump de registros
 	call irqDispatcher
 
 	; signal pic EOI (End of Interrupt)
@@ -76,8 +78,6 @@ SECTION .text
 	popState
 	iretq
 %endmacro
-
-
 
 %macro exceptionHandler 1
 	pushState
@@ -153,6 +153,8 @@ _irq80Handler:
 	je sys_read
 	cmp rax, 1
 	je sys_write
+	cmp rax, 2
+	je sys_inforeg
 	cmp rax, 4
 	je sys_clear_screan
 	cmp rax, 5
@@ -184,6 +186,10 @@ jmp continue
 
 sys_screen_size:
 call sysScreenSize
+jmp continue
+
+sys_inforeg:
+call sysInfoReg
 jmp continue
 
 ;Zero Division Exception
