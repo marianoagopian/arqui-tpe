@@ -6,6 +6,7 @@
 #include <idtLoader.h>
 #include <time.h>
 #include <defs.h>
+#include <interrupts.h>
 #include "./include/video.h"
 #include "./include/syscalls.h"
 

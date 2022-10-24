@@ -2,6 +2,7 @@
 #include <font.h>
 #include <stdint.h>
 #include <string.h>
+#include <syscalls.h>
 
 struct vbe_mode_info_structure {
     uint16_t attributes;        // deprecated, only bit 7 should be of interest to you, and it indicates the mode supports a linear frame buffer.
@@ -123,6 +124,11 @@ void scr_printChar(char c) {
     Color black = {0x00, 0x00, 0x00};
 
     if (c == '\b') {
+        if(penX < CHAR_WIDTH * 4){
+            //if(penY != 0) penY -= CHAR_HEIGHT;
+            //penX = (sysScreenSize() / 9 - 1) * 9;
+            return;
+        }
         penX -= CHAR_WIDTH;
         scr_drawRect(penX, penY, 9, 16, black);
         return;

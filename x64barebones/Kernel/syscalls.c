@@ -34,13 +34,13 @@ int sysScreenSize() {
   return scr_getWidth() | scr_getHeight() << 32;
 }
 
-unsigned int sysRead(unsigned int fd, char * buf, unsigned int count) {
+/*unsigned int sysRead(unsigned int fd, char * buf, unsigned int count) {
 	char c = 0, keyboardResp = 0; 
 	int i = 0;
 
-	/*if(checkIfAvailableKey()) {
+	if(checkIfAvailableKey()) {
 		consume_kb_buffer(buf, count);
-	}*/
+	}
 	while(c != '\n' && keyboardResp != BUFFER_FULL) {
 		
 		keyboardResp = keyboard_handler();
@@ -61,10 +61,19 @@ unsigned int sysRead(unsigned int fd, char * buf, unsigned int count) {
 			}
 	}
 
-	/*for(int j=0 ; j < i ; j++) {				// consumo el buffer de una, hasta el \n o fin de caracteres
+	for(int j=0 ; j < i ; j++) {				// consumo el buffer de una, hasta el \n o fin de caracteres
 		buf[j] = get_key();
-	}*/
+	}
 
 	return i;
-}
+}*/
 
+unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
+	unsigned int totalRead = 0;
+	do {
+			_hlt();
+			totalRead += kbd_readCharacters(buf + totalRead, count - totalRead);
+		} while (totalRead == 0);
+
+	return totalRead;
+}

@@ -49,47 +49,47 @@ char getChar() {
 // 	if (isBlinkerOn)
 // 			sys_drawrect(rectX, rectY, 9, 3, black);
 
-    scanf(&c,1);
+    while (sys_read(STDIN, &c, 1) == 0){
+        ;
+    }
 	return c;
 }
 
 void scanf(char* readbuf, uint64_t maxlen) {
-    int read = sys_read(STDIN, readbuf, maxlen);
-    print(readbuf, read);
-    // if (maxlen == 0)
-    //     return;
+    if (maxlen == 0)
+        return;
 
-    // // We read up to maxlen-1 characters from the input.
-    // uint64_t count = 0;
-    // do {
-    //     char c = getChar();
+    // We read up to maxlen-1 characters from the input.
+    uint64_t count = 0;
+    do {
+        char c = getChar();
 
-    //     if (c == '\n') { // If a '\n' is found, we zero-terminate the string and return.
-    //         readbuf[MIN(count, maxlen-1)] = '\0';
-    //         // print(&c, 1);
-    //         return;
-    //     // } if (c == '\b') { If a '\b' character is found, we remove the last char from readbuf.
-    //         // if (count != 0) {
-    //         //     count--;
-    //         //     uint32_t penX = penpos & 0x0000FFFF;
-    //         //     uint32_t penY = penpos >> 16;
-    //         //     if (penX < 9) {
-    //         //         if (penY != (uint32_t)0) penY -= 16;
-    //         //         penX = ((sys_screensize() & 0xFFFFFFFF) / 9 - 1) * 9;
-    //         //     } else {
-    //         //         penX -= 9;
-    //         //     }
-    //         //     penpos = penX | (penY << 16);
-    //         //     sys_drawrect(penX, penY, 9, 16, black);
-    //         // }
-    //     } else {
-    //         // We add the read character to the buffer and continue.
-	//         // print(&c, 1);
-    //         if (count < maxlen-1)
-    //             readbuf[count] = c;
-    //         count++;
-    //     }
-    // } while (1);
+        if (c == '\n') { // If a '\n' is found, we zero-terminate the string and return.
+            readbuf[MIN(count, maxlen-1)] = '\0';
+            print(&c, 1);
+            return;
+        } /* if (c == '\b') { //If a '\b' character is found, we remove the last char from readbuf.
+            if (count != 0) {
+                count--;
+                uint32_t penX = penpos & 0x0000FFFF;
+                uint32_t penY = penpos >> 16;
+                if (penX < 9) {
+                    if (penY != (uint32_t)0) penY -= 16;
+                    penX = ((sys_screensize() & 0xFFFFFFFF) / 9 - 1) * 9;
+                } else {
+                    penX -= 9;
+                }
+                penpos = penX | (penY << 16);
+                sys_drawrect(penX, penY, 9, 16, black);
+            }
+        } */ else {
+            //We add the read character to the buffer and continue.
+	        print(&c, 1);
+            if (count < maxlen-1)
+                readbuf[count] = c;
+            count++;
+        }
+    } while (1);
 }
 
 int strlen(const char * str) {

@@ -30,7 +30,7 @@
  *      1 <=> wrote buffer
  *      0 <=> otherwise
  */
-char keyboard_handler();
+void keyboard_handler();
 
 
 /*
