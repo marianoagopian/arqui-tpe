@@ -1,6 +1,8 @@
 #include <commands.h>
 #include <functions.h>
 
+#define PARAMETERS_ERROR "Parameters are not needed for this command, try without them.\n"
+
 static const char* commands[COMMANDS_QTY] = {"DECRASEFONTSIZE", "DIVBYZERO", "HELP", "INCREASEFONTSIZE", "INFOREG",  "INVALIDOPERATIONCODE", "PRINTMEM",  "TIME", "TRONLIGHTCYCLE"};
 
 void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH], char readbuf[BUFFER_LENGTH]) {
@@ -37,13 +39,17 @@ void callFunction(char * command, char * parameter) {
 			functionIndex = i;
 		}
 	}
+  if((functionIndex != 6 && functionIndex != -1) && *parameter != 0) {
+    print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
+    return;
+  }
 	switch (functionIndex) {
 	// case 0:
 	// 	decreaseFontSize();
 	// 	break;
-	// case 1:
-	// 	divByZero();
-	// 	break;
+	case 1:
+		divByZero();
+		break;
 	case 2:
 		help();
 		break;

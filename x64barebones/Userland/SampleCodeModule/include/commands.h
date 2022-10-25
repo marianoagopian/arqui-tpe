@@ -8,6 +8,7 @@
 #define INVALID_COMMAND_MSG "-Invalid command. Check available commands with help.\n"
 
 void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH], char readbuf[BUFFER_LENGTH]);
+
 void callFunction(char * command, char * parameter);
 
 void help();

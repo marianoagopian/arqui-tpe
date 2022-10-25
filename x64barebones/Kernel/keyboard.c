@@ -92,3 +92,7 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n) {
     _sti();
     return charsRead;
 }
+
+int kbd_getBufferLength() {
+  return writePos;
+}

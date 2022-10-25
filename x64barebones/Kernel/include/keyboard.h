@@ -21,18 +21,8 @@
  */
 void keyboard_handler();
 
+unsigned int kbd_readCharacters(char* buf, unsigned int n);
 
-/*
- * << consume_kb_buffer >>
- * ----------------------------------------------------------------------
- * Descripcion: Consumes keyboard buffer DUH
- * ----------------------------------------------------------------------
- * Recibe: --
- * Devuelve: 
- *      (uint) bytes consumed
- */
-unsigned int consume_kb_buffer(char * buf, unsigned int count);
-
-char checkIfAvailableKey();
+int kbd_getBufferLength();
 
 #endif

@@ -1,4 +1,12 @@
 #include <stdint.h>
+#include <defs.h>
+#include <syscalls.h>
+
+
+/* printRegisters */
+#define TOTAL_REGISTERS 15
+#define REGISTER_LENGTH 16
+
 
 void * memset(void * destination, int32_t c, uint64_t length)
 {
@@ -55,4 +63,54 @@ int _strlen(const char * str){
 		ans++;
 	}
 	return ans;
+}
+
+void reverseString(char * string, int length) {
+    char aux;
+    for(int i = 0, j = length - 1; i < j ; i++, j--) {
+        aux = string[i];
+        string[i] = string[j];
+        string[j] = aux;
+    }
+}
+
+
+
+int hexToString(uint64_t num, char * buffer, int fixedLength) {
+    int i = 0;
+
+    for(int aux ; num > 0 ; i++, num/=16){
+        aux = num % 16;
+        if(aux >=0 && aux < 10)                     // convierto a hex
+            buffer[i] = aux + '0';
+        else
+            buffer[i] = aux - 10 + 'A';
+
+    }
+    while(i<fixedLength) {                   // le agrego 0 por deltante para llegar a la longitud deseada
+        buffer[i++] = '0';
+    }
+    reverseString(buffer,i);
+    buffer[i] = 0;
+
+    return i;
+}
+
+static char * registerOrder[] = {
+	"RAX: ","RBX: ","RCX: ","RDX: ",
+	"RBP: ","RSI: ","RDI: ","R8: ", 
+	"R9: ","R10: ","R11: ","R12: ",
+	"R13: ","R14: ","R15: " 
+};
+
+void printRegisters(uint64_t * registerDumpPos) {
+	char buffer[100];
+	for(int i=0, j = TOTAL_REGISTERS - 1; i<TOTAL_REGISTERS ; i++, j--) {
+
+		sysWrite(STDERR, registerOrder[i], _strlen(registerOrder[i])-1);			// imprimo que registro es
+
+		int amount = hexToString(registerDumpPos[j], buffer, REGISTER_LENGTH + 1);					
+		sysWrite(STDERR, buffer,amount);										// imprimo valor de registro
+		sysWrite(STDERR, "\n",1);
+	}
 }
