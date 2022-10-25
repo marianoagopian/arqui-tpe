@@ -25,4 +25,6 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n);
 
 int kbd_getBufferLength();
 
+void kbd_clearBuffer();
+
 #endif

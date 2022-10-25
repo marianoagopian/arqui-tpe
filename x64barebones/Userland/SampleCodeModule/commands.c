@@ -1,5 +1,6 @@
 #include <commands.h>
 #include <functions.h>
+#include <exceptions.h>
 
 #define PARAMETERS_ERROR "Parameters are not needed for this command, try without them.\n"
 

@@ -5,10 +5,12 @@
 #include <interrupts.h>
 #include <keyboard.h>
 
+extern void resetmain(void);
+
 #define ZERO_EXCEPTION_ID 0
 
 static void zeroDivision();
-static void exceptionHandler();
+static void handlerException();
 
 void exceptionDispatcher(int exception, uint64_t * registerDumpPos) {
   switch (exception) {
@@ -22,12 +24,20 @@ void exceptionDispatcher(int exception, uint64_t * registerDumpPos) {
 }
 
 static void zeroDivision(uint64_t * registerDumpPos) {
-	exceptionHandler("An exception has occurred dividing by zero\n", registerDumpPos);
+	handlerException("An exception has occurred dividing by zero\n", registerDumpPos);
 }
 
-static void exceptionHandler(char * msg, uint64_t * registerDumpPos) {
+static void handlerException(char * msg, uint64_t * registerDumpPos) {
   sysWrite(STDERR, msg, _strlen(msg));
   printRegisters(registerDumpPos);
   sysWrite(STDERR, "Press any key to continue.", _strlen("Press any key to continue"));
-  do { _hlt(); } while(kbd_getBufferLength() == 0);
+
+  kbd_clearBuffer();
+  char *aux = {0};
+  do { _hlt(); sysRead(STDOUT, aux, 2); } while(*aux == 0);
+
+  kbd_clearBuffer();
+  scr_clear();
+  _cli();
+  resetmain();
 }

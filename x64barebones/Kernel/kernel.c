@@ -51,8 +51,6 @@ void * initializeKernelBinary() {
 int main() {
 	load_idt();
 	scr_clear();
-	sysWrite(STDERR, "Probando error", 20);
-	sysWrite(STDOUT, "Probando normal", 20);
 
 	((EntryPoint)sampleCodeModuleAddress)();
 

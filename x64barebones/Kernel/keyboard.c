@@ -96,3 +96,7 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n) {
 int kbd_getBufferLength() {
   return writePos;
 }
+
+void kbd_clearBuffer() {
+    writePos = 0;
+}

@@ -23,6 +23,7 @@ int main() {
 		char command[BUFFER_LENGTH] = {0};
 
 		checkCommand(command, parameter, readBuffer);
+
 		callFunction(command, parameter);
 	}
 }
