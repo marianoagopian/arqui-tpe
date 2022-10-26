@@ -159,14 +159,14 @@ _irq80Handler:
 	je sys_write
 	cmp rax, 2
 	je sys_inforeg
-  cmp rax, 3
-  je sys_time
+	cmp rax, 3
+	je sys_time
 	cmp rax, 4
 	je sys_clear_screan
 	cmp rax, 5
 	je sys_write_at
-  cmp rax, 6
-  je sys_printmem
+	cmp rax, 6
+	je sys_printmem
 	jmp continue
 
 continue:
@@ -199,7 +199,7 @@ call sysTime
 jmp continue
 
 sys_printmem:
-call sys_printmem
+call sysPrintmem
 jmp continue
 
 ;Zero Division Exception

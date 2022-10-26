@@ -2,7 +2,7 @@
 #include <string.h>
 #include <lib.h>
 #include <moduleLoader.h>
-#include <naiveRTC.h>
+#include <RTC.h>
 #include <idtLoader.h>
 #include <time.h>
 #include <defs.h>

@@ -41,10 +41,10 @@ void callFunction(char * command, char * parameter) {
 			functionIndex = i;
 		}
 	}
-  if((functionIndex != 7 && functionIndex != -1) && *parameter != 0) {
-    print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
+	if((functionIndex != 7 && functionIndex != -1) && *parameter != 0) {
+    	print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
     return;
-  }
+  	}
 	switch (functionIndex) {
     case 0:
       sys_clear_screen();
@@ -67,12 +67,12 @@ void callFunction(char * command, char * parameter) {
 	case 6:
 		invalidOperationCode();
 		break;
-	// case 7:
-	// 	printmem();
-	// 	break;
-	// case 8:
-	// 	time();
-	// 	break;
+	case 7:
+		printmem(parameter);
+		break;
+	case 8:
+		timer();
+		break;
 	// case 9:
 	// 	tronLightCycle();
 	// 	break;

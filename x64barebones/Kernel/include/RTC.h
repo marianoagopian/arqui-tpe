@@ -1,5 +1,5 @@
-#ifndef NAIVERTC_H
-#define NAIVERTC_H
+#ifndef RTC_H
+#define RTC_H
 
 
 extern int _NRTCGetHours();

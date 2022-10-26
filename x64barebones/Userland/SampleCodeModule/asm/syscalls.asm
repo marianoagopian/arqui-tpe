@@ -3,6 +3,8 @@ GLOBAL sys_write
 GLOBAL sys_write_at
 GLOBAL sys_clear_screen
 GLOBAL sys_info_reg
+GLOBAL sys_time
+GLOBAL sys_printmem
 section .text
 
 sys_read:
@@ -20,7 +22,10 @@ sys_info_reg:
   int 80h
   ret
 
-
+sys_time:
+  mov rax, 3
+  int 80h
+  ret
 
 sys_clear_screen:
   mov rax, 4
@@ -33,7 +38,7 @@ sys_write_at:
   int 80h
   ret
 
-sys_print_mem:
+sys_printmem:
   mov rax, 6
   int 80h
   ret

@@ -96,9 +96,10 @@ void scanf(char* readbuf, uint64_t maxlen) {
         } */ else {
             //We add the read character to the buffer and continue.
 	        print(&c, 1);
-            if (count < maxlen-1)
+            if (count < maxlen-1 && c != 0) {
                 readbuf[count] = c;
-            count++;
+                count++;
+            }
         }
     } while (1);
 }
@@ -111,11 +112,10 @@ int strlen(const char * str) {
     return ans;
 }
 
-int strcmp(const char* str1, const char* str2) { // Devuelve 0 si son iguales, -1 sino. Los otros casos no nos importan.
-	for (; *str1 != '\0' && *str2 != '\0'; str1++, str2++) {
-        if (*str1 != *str2) {
-            return -1;
-        }
+int strcmp(const char* s1, const char* s2) {
+    while(*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
     }
-	return 0;
+    return *(const unsigned char*)s1 - *(const unsigned char*)s2;
 }

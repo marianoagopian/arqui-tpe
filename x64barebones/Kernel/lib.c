@@ -115,7 +115,7 @@ void printRegisters(uint64_t * registerDumpPos) {
 	}
 }
 
-char * intToString(uint64_t number, char * buffer) {
+char * intToString(uint64_t num, char * buffer) {
    if(num==0) {
         buffer[0] = '0';
         buffer[1] = 0;
