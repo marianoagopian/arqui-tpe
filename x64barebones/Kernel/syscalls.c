@@ -3,8 +3,16 @@
 #include <defs.h>
 #include <lib.h>
 #include <interrupts.h>
+#include <RTC.h>
 
 static uint64_t infoReg[REGISTERS] = {0};
+
+static int getFormat(int n) {
+	int dec = n & 240;
+	dec = dec >> 4;
+	int units = n & 15;
+	return dec * 10 + units;
+}
 
 int sysWrite(int fd, char * buf, int count) {
   if(fd != STDERR && fd != STDOUT) {
@@ -90,4 +98,10 @@ void sysInfoReg(uint64_t * buffer) {
 	for(int i = 0 ; i < REGISTERS ; i++) {
 		buffer[i] = infoReg[i];
 	}
+}
+
+char * sysTime() {
+  char * hours = intToString(getFormat(_NRTCGetHours()));
+  char * minutes = intToString(getFormat(_NRTCGetMins()));
+  char * seconds =  intToString(getFormat(_NRTCGetSeconds()));
 }

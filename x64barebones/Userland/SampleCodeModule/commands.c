@@ -1,10 +1,11 @@
 #include <commands.h>
 #include <functions.h>
 #include <exceptions.h>
+#include <syscalls.h>
 
 #define PARAMETERS_ERROR "Parameters are not needed for this command, try without them.\n"
 
-static const char* commands[COMMANDS_QTY] = {"DECRASEFONTSIZE", "DIVBYZERO", "HELP", "INCREASEFONTSIZE", "INFOREG",  "INVALIDOPERATIONCODE", "PRINTMEM",  "TIME", "TRONLIGHTCYCLE"};
+static const char* commands[COMMANDS_QTY] = {"clear", "decreasefontsize", "divbyzero", "help", "increasefontsize", "inforeg",  "invalidopcode", "printmem",  "time", "tronlightcycle"};
 
 void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH], char readbuf[BUFFER_LENGTH]) {
 	int i, j;
@@ -40,36 +41,39 @@ void callFunction(char * command, char * parameter) {
 			functionIndex = i;
 		}
 	}
-  if((functionIndex != 6 && functionIndex != -1) && *parameter != 0) {
+  if((functionIndex != 7 && functionIndex != -1) && *parameter != 0) {
     print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
     return;
   }
 	switch (functionIndex) {
-	// case 0:
+    case 0:
+      sys_clear_screen();
+      break;
+	// case 1:
 	// 	decreaseFontSize();
 	// 	break;
-	case 1:
+	case 2:
 		divByZero();
 		break;
-	case 2:
+	case 3:
 		help();
 		break;
-	// case 3:
+	// case 4:
 	// 	increaseFontSize();
 	// 	break;
-	case 4:
+	case 5:
 		infoReg();
 		break;
-	// case 5:
-	// 	invalidOperationCode();
-	// 	break;
-	// case 6:
+	case 6:
+		invalidOperationCode();
+		break;
+	// case 7:
 	// 	printmem();
 	// 	break;
-	// case 7:
+	// case 8:
 	// 	time();
 	// 	break;
-	// case 8:
+	// case 9:
 	// 	tronLightCycle();
 	// 	break;
 	default:

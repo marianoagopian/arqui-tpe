@@ -15,6 +15,7 @@ GLOBAL _irq05Handler
 GLOBAL _irq80Handler
 
 GLOBAL _exception0Handler
+GLOBAL _exception6Handler
 GLOBAL getKey
 
 EXTERN irqDispatcher
@@ -25,6 +26,8 @@ EXTERN sysClear
 EXTERN sysScreenSize
 EXTERN sysWriteAt
 EXTERN sysInfoReg
+EXTERN sysTime
+EXTERN sysPrintmem
 
 SECTION .text
 
@@ -156,12 +159,14 @@ _irq80Handler:
 	je sys_write
 	cmp rax, 2
 	je sys_inforeg
+  cmp rax, 3
+  je sys_time
 	cmp rax, 4
 	je sys_clear_screan
 	cmp rax, 5
 	je sys_write_at
-	cmp rax, 6
-	je sys_screen_size
+  cmp rax, 6
+  je sys_printmem
 	jmp continue
 
 continue:
@@ -177,6 +182,10 @@ sys_write:
 call sysWrite
 jmp continue
 
+sys_inforeg:
+call sysInfoReg
+jmp continue
+
 sys_clear_screan:
 call sysClear
 jmp continue
@@ -185,17 +194,20 @@ sys_write_at:
 call sysWriteAt
 jmp continue
 
-sys_screen_size:
-call sysScreenSize
+sys_time:
+call sysTime
 jmp continue
 
-sys_inforeg:
-call sysInfoReg
+sys_printmem:
+call sys_printmem
 jmp continue
 
 ;Zero Division Exception
 _exception0Handler:
 	exceptionHandler 0
+
+_exception6Handler:
+	exceptionHandler 6
 
 haltcpu:
 	cli

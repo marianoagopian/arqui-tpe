@@ -3,4 +3,6 @@
 
 void divByZero();
 
+void invalidOperationCode();
+
 #endif

@@ -281,3 +281,79 @@ make clean
 clear
 make all
 make all
+cd root/x64barebones/
+ls
+make all
+make clean
+make all
+make clean
+make all
+make all
+make clean
+make all
+clean
+clear
+make all
+make all
+make cean
+make clean
+make all
+make all
+make clean
+make all
+make clean
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+clear
+make clean
+make all
+clear
+make clear
+make clean
+clear
+make all
+clear
+make clear
+make clean
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all

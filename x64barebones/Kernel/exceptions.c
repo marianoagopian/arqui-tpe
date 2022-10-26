@@ -8,8 +8,10 @@
 extern void resetmain(void);
 
 #define ZERO_EXCEPTION_ID 0
+#define INVALID_OPERATION_CODE_ID 6
 
-static void zeroDivision();
+static void zeroDivision(uint64_t * registerDumpPos);
+static void invalidOpCode(uint64_t * registerDumpPos);
 static void handlerException();
 
 void exceptionDispatcher(int exception, uint64_t * registerDumpPos) {
@@ -18,13 +20,18 @@ void exceptionDispatcher(int exception, uint64_t * registerDumpPos) {
       zeroDivision(registerDumpPos);
       break;
     
-    default:
+    case INVALID_OPERATION_CODE_ID:
+      invalidOpCode(registerDumpPos);
       break;
     }
 }
 
 static void zeroDivision(uint64_t * registerDumpPos) {
 	handlerException("An exception has occurred dividing by zero\n", registerDumpPos);
+}
+
+static void invalidOpCode(uint64_t * registerDumpPos) {
+	handlerException("An exception has occurred because it was used an invalid operation code\n", registerDumpPos);
 }
 
 static void handlerException(char * msg, uint64_t * registerDumpPos) {

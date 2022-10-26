@@ -21,7 +21,7 @@ uint64_t sys_write(uint64_t fd, const char* buf, uint64_t count);
 // uint64_t sys_millis(void);
 void sys_clear_screen();
 uint32_t sys_write_at(const char* buf, uint64_t count, uint16_t x, uint16_t y, Color color);
-uint64_t sys_screen_size();
+// uint64_t sys_screen_size();
 // uint64_t sys_pollread(uint64_t fd, char* buf, uint64_t count, uint64_t timeout_ms);
 // void sys_drawpoint(uint16_t x, uint16_t y, Color color);
 // void sys_drawrect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);

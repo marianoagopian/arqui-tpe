@@ -6,7 +6,7 @@
 #include <syscalls.h>
 
 /* --- CONSTANTS  --- */
-#define SHIFT 19
+#define SEMICOLON 19
 
 
 /*
