@@ -19,4 +19,10 @@ int strcmp(const char * str1, const char* str2);
 
 void infoReg();
 
+void printf(char *fmt,...);
+
+void reverseString(char * string, int length);
+
+int intToString(int num, char *buffer);
+
 #endif

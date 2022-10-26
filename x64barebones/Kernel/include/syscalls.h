@@ -17,6 +17,6 @@ uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Co
 
 void saveInfoReg(uint64_t * regDumpPos);
 
-void sysInfoReg(uint64_t * buffer);
+int sysInfoReg(uint64_t * buffer);
 
 #endif

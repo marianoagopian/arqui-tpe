@@ -13,15 +13,6 @@ static char * registerOrder[] = {
     "R13: ","R14: ","R15: "
 };
 
-static void reverseString(char * string, int length) {
-    char aux;
-    for(int i = 0, j = length - 1; i < j ; i++, j--) {
-        aux = string[i];
-        string[i] = string[j];
-        string[j] = aux;
-    }
-}
-
 static int hexToString(uint64_t num, char * buffer, int fixedLength) {
     int i = 0;
 
@@ -46,7 +37,10 @@ void infoReg() {
     char stringBuffer[BUFF_SIZE];
     uint64_t regBuffer[REGISTERS];
 
-    sys_info_reg(regBuffer);
+    if(sys_info_reg(regBuffer) == 0){
+        printf("%s\n", regBuffer);
+        return;
+    }
     for(int i = 0 ; i < REGISTERS ; i++) {
         hexToString(regBuffer[i], stringBuffer, REGISTER_LENGTH);
         print(registerOrder[i], strlen(registerOrder[i]));

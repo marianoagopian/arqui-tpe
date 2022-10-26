@@ -94,16 +94,25 @@ unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
 	return totalRead;
 }
 
+static int hasScreenshoted=0;
+
 void saveInfoReg(uint64_t * regDumpPos) {
+	hasScreenshoted=1;
 	for(int i = 0 ; i < REGISTERS ; i++) {
 		infoReg[i] = regDumpPos[i];
 	}
 }
 
-void sysInfoReg(uint64_t * buffer) {
+int sysInfoReg(uint64_t * buffer) {
+	if(hasScreenshoted == 0){
+		char *aux = "Press the SHIFT button before calling InfoReg";
+		memcpy(buffer, aux, _strlen(aux));
+		return 0;
+	}
 	for(int i = 0 ; i < REGISTERS ; i++) {
 		buffer[i] = infoReg[i];
 	}
+	return 1;
 }
 
 int sysTime() {

@@ -2,9 +2,6 @@
 #include <functions.h>
 #include <syscalls.h>
 
-void reverseString(char * string, int length);
-
-int intToString(int num, char *buffer);
 
 void timer(){
     int aux = sys_time();
@@ -28,29 +25,4 @@ void timer(){
     print(":", 1);
     print(secondsStr, secondsLen);
     print("\n", 2);
-}
-
-void reverseString(char * string, int length) {
-    char aux;
-    for(int i = 0, j = length - 1; i < j ; i++, j--) {
-        aux = string[i];
-        string[i] = string[j];
-        string[j] = aux;
-    }
-}
-
-int intToString(int num, char *buffer) {
-    if(num==0) {
-        buffer[0] = '0';
-        buffer[1] = 0;
-        return 2;
-    }
-    int i = 0;
-    while(num > 0) {
-        buffer[i++] = num % 10 + '0';
-        num /= 10;
-    }
-    reverseString(buffer, i);
-    buffer[i] = 0;
-    return i;
 }

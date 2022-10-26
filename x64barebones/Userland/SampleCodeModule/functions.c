@@ -1,6 +1,7 @@
 #include "./include/syscalls.h"
 #include <color.h>
 #include <functions.h>
+#include <stdarg.h>
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 #define REGISTERS 15
@@ -119,3 +120,66 @@ int strcmp(const char* s1, const char* s2) {
     }
     return *(const unsigned char*)s1 - *(const unsigned char*)s2;
 }
+
+void reverseString(char * string, int length) {
+    char aux;
+    for(int i = 0, j = length - 1; i < j ; i++, j--) {
+        aux = string[i];
+        string[i] = string[j];
+        string[j] = aux;
+    }
+}
+
+int intToString(int num, char *buffer) {
+    if(num==0) {
+        buffer[0] = '0';
+        buffer[1] = 0;
+        return 2;
+    }
+    int i = 0;
+    while(num > 0) {
+        buffer[i++] = num % 10 + '0';
+        num /= 10;
+    }
+    reverseString(buffer, i);
+    buffer[i] = 0;
+    return i;
+}
+
+void printf(char *fmt,...){
+    va_list ap; 
+    char *p, *sval;
+    int ival;
+    //double dval;
+
+    va_start(ap, fmt);
+    for(p = fmt; *p; p++) {
+        if(*p != '%') {
+            putchar(*p);
+            continue;
+        }
+        switch (*++p) {
+            case 'd':
+                ival = va_arg(ap, int);
+                char *aux = {0};
+                int len = intToString(ival, aux);
+                print(aux,len);
+                break;
+            //case 'f':
+              //  dval  = va_arg(ap, double);
+                //printf("%f", dval);
+                //break;
+            case 's':
+                for(sval = va_arg(ap, char *); *sval; sval++)
+                    putchar(*sval);
+                break;
+            default:
+                putchar(*p);
+                break;
+        }
+    }
+    va_end(ap); 
+}
+
+
+
