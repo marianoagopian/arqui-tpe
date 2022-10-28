@@ -2,6 +2,7 @@
 #define SYSCALLS_H
 
 #include <video.h>
+#include <time.h>
 
 #define REGISTERS 15
 
@@ -18,5 +19,9 @@ uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Co
 void saveInfoReg(uint64_t * regDumpPos);
 
 int sysInfoReg(uint64_t * buffer);
+
+int sysMillis();
+
+
 
 #endif

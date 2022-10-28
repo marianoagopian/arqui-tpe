@@ -25,4 +25,6 @@ void reverseString(char * string, int length);
 
 int intToString(int num, char *buffer);
 
+void screenSize(int *width, int *height);
+
 #endif

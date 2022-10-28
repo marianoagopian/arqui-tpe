@@ -28,6 +28,8 @@ EXTERN sysWriteAt
 EXTERN sysInfoReg
 EXTERN sysTime
 EXTERN sysPrintmem
+EXTERN sysDrawPoint
+EXTERN sysMillis
 
 SECTION .text
 
@@ -37,8 +39,8 @@ SECTION .text
 	push rcx
 	push rdx
 	push rbp
-	push rdi
 	push rsi
+	push rdi
 	push r8
 	push r9
 	push r10
@@ -58,13 +60,15 @@ SECTION .text
 	pop r10
 	pop r9
 	pop r8
-	pop rsi
 	pop rdi
+	pop rsi
 	pop rbp
 	pop rdx
 	pop rcx
 	pop rbx
 	pop rax
+	;pop $
+	;add rsp, 8
 %endmacro
 
 %macro irqHandlerMaster 1
@@ -167,6 +171,12 @@ _irq80Handler:
 	je sys_write_at
 	cmp rax, 6
 	je sys_printmem
+	cmp rax, 7
+	je sys_draw_point
+	cmp rax, 8
+	je sys_screen_size
+	cmp rax, 9
+	je sys_millis
 	jmp continue
 
 continue:
@@ -202,6 +212,18 @@ sys_printmem:
 call sysPrintmem
 jmp continue
 
+sys_draw_point:
+call sysDrawPoint
+jmp continue
+
+sys_screen_size:
+call sysScreenSize
+jmp continue
+
+sys_millis:
+call sysMillis
+jmp continue
+
 ;Zero Division Exception
 _exception0Handler:
 	exceptionHandler 0
@@ -216,3 +238,4 @@ haltcpu:
 
 SECTION .bss
 	aux resq 1
+	reg resb 64

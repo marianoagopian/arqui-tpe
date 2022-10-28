@@ -34,6 +34,10 @@ int sysWrite(int fd, char * buf, int count) {
 	return count;
 }
 
+void sysDrawPoint(uint16_t x, uint16_t y, Color color) {
+	scr_setPixel(x, y, color);
+}
+
 uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) {
 	scr_setPenPosition(x, y);
 	scr_setPenColor(color);
@@ -49,40 +53,6 @@ void sysClear() {
 int sysScreenSize() {
   return scr_getWidth() | scr_getHeight() << 32;
 }
-
-/*unsigned int sysRead(unsigned int fd, char * buf, unsigned int count) {
-	char c = 0, keyboardResp = 0; 
-	int i = 0;
-
-	if(checkIfAvailableKey()) {
-		consume_kb_buffer(buf, count);
-	}
-	while(c != '\n' && keyboardResp != BUFFER_FULL) {
-		
-		keyboardResp = keyboard_handler();
-
-		if(keyboardResp == VALID_KEY) {
-			//c = peek_key();
-			//scr_printChar(c);
-		
-			if(i<count) {
-				i++;
-			}
-		}
-		else if(keyboardResp == DELETE_KEY) {
-				//scr_printChar('\b');
-				if(i > 0) {
-					i--;
-				}
-			}
-	}
-
-	for(int j=0 ; j < i ; j++) {				// consumo el buffer de una, hasta el \n o fin de caracteres
-		buf[j] = get_key();
-	}
-
-	return i;
-}*/
 
 unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
 	unsigned int totalRead = 0;
@@ -140,3 +110,17 @@ unsigned int sysPrintmem(uint64_t position, char * buffer) {
 
 	return 0;
 }
+
+int sysMillis(){
+	return milliseconds();
+}
+
+// unsigned int sysReadInTron(unsigned int fd, char * buf, unsigned int count){
+// 	char c
+// 	do {
+// 			_hlt();
+// 			c 
+// 		} while (totalRead == 0);
+
+// 	return totalRead;
+// }

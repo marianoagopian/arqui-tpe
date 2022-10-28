@@ -11,5 +11,24 @@ void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH],
 
 void callFunction(char * command, char * parameter);
 
+void sys_clear_screen();
+
+void decreaseFontSize();
+
+void divByZero();
+
+void help();
+
+void increaseFontSize();
+
+void inforeg();
+
+void invalidOperationCode();
+
+void printmem(char *arg);
+
+void time();
+
+void tronLightCycle();
 
 #endif

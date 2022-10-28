@@ -8,6 +8,7 @@
 /* --- CONSTANTS  --- */
 #define SEMICOLON 19
 
+extern char getKey();
 
 /*
  * << keyboard_handler >>
