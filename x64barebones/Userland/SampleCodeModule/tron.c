@@ -35,16 +35,20 @@ void tron() {
       for(int z=0;z<10000000;z++){
           ;
       }
-      
+
       positions[y1/4][x1/4] = 1;
       positions[y2/4][x2/4] = 1;
-      
+
       for(i = 0; i < 4; i++) {
         for(j = 0; j < 4; j++) {
           sys_draw_point(x1, y1, magenta);
           sys_draw_point(x2, y2, yellow);
           moveCharacter(playerOneDirection, &x1, &y1);
           moveCharacter(playerTwoDirection, &x2, &y2);
+        }
+        if(positions[y1/4][x1/4] == 1 || positions[y2/4][x2/4] == 1) {
+          i = 4;
+          j = 4;
         }
       }
 
