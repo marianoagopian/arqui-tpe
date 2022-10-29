@@ -111,16 +111,10 @@ unsigned int sysPrintmem(uint64_t position, char * buffer) {
 	return 0;
 }
 
-int sysMillis(){
-	return milliseconds();
+void sysClearBuffer() {
+  kbd_clearBuffer();
 }
 
-// unsigned int sysReadInTron(unsigned int fd, char * buf, unsigned int count){
-// 	char c
-// 	do {
-// 			_hlt();
-// 			c 
-// 		} while (totalRead == 0);
-
-// 	return totalRead;
-// }
+char sysCheckBuffer() {
+  return kbd_checkBuffer();
+}

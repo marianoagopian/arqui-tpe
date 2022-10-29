@@ -28,4 +28,6 @@ int kbd_getBufferLength();
 
 void kbd_clearBuffer();
 
+char kbd_checkBuffer();
+
 #endif

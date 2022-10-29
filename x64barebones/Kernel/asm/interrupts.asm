@@ -29,7 +29,8 @@ EXTERN sysInfoReg
 EXTERN sysTime
 EXTERN sysPrintmem
 EXTERN sysDrawPoint
-EXTERN sysMillis
+EXTERN sysClearBuffer
+EXTERN sysCheckBuffer
 
 SECTION .text
 
@@ -176,7 +177,9 @@ _irq80Handler:
 	cmp rax, 8
 	je sys_screen_size
 	cmp rax, 9
-	je sys_millis
+	je sys_check_buffer
+  cmp rax, 10
+	je sys_clear_buffer
 	jmp continue
 
 continue:
@@ -220,8 +223,12 @@ sys_screen_size:
 call sysScreenSize
 jmp continue
 
-sys_millis:
-call sysMillis
+sys_clear_buffer:
+call sysClearBuffer
+jmp continue
+
+sys_check_buffer:
+call sysCheckBuffer
 jmp continue
 
 ;Zero Division Exception

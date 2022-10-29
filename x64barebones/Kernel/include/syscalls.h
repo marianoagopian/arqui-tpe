@@ -20,7 +20,9 @@ void saveInfoReg(uint64_t * regDumpPos);
 
 int sysInfoReg(uint64_t * buffer);
 
-int sysMillis();
+char sysCheckBuffer();
+
+void sysClearBuffer(); 
 
 
 

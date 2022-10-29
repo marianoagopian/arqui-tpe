@@ -31,5 +31,7 @@ uint8_t sys_info_reg(uint64_t reg[15]);
 unsigned int sys_printmem(uint64_t position, char * buffer);
 void sys_draw_point(uint16_t x, uint16_t y, Color color);
 int sys_screen_size();
+void sys_clear_buffer();
+char sys_check_buffer();
 
 #endif

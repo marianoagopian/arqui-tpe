@@ -7,7 +7,8 @@ GLOBAL sys_time
 GLOBAL sys_printmem
 GLOBAL sys_draw_point
 GLOBAL sys_screen_size
-GLOBAL sys_millis
+GLOBAL sys_check_buffer
+GLOBAL sys_clear_buffer
 section .text
 
 sys_read:
@@ -56,7 +57,12 @@ sys_screen_size:
   int 80h
   ret
 
-sys_millis:
+sys_check_buffer:
   mov rax, 9
+  int 80h
+  ret
+
+sys_clear_buffer:
+  mov rax, 10
   int 80h
   ret

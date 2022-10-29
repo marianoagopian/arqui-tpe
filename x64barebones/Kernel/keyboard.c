@@ -18,6 +18,7 @@ static const char scanCodeTable[256] = {
 /*-------- STATIC FILE VARIABLES --------*/
 static char keyBuffer[BUFFER_SIZE];             // Buffer de caracters de teclado
 static int writePos;				// Posicion a escribir en el buffer
+static int index = 0;
 
 
 void keyboard_handler(uint64_t * regDumpPos) {
@@ -31,9 +32,6 @@ void keyboard_handler(uint64_t * regDumpPos) {
     
 	if(writePos < BUFFER_SIZE) {
 		keyBuffer[writePos++] = c;
-  } else {
-    kbd_clearBuffer();
-    keyBuffer[writePos++] = c;
   }
 }
 
@@ -62,4 +60,12 @@ void kbd_clearBuffer() {
     keyBuffer[i] = 0;
   } 
   writePos = 0;
+  index = 0;
+}
+
+char kbd_checkBuffer() {
+  if(index < writePos) {
+    return keyBuffer[index++];
+  }
+  return keyBuffer[index];
 }

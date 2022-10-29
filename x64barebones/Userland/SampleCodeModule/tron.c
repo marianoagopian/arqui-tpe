@@ -10,71 +10,65 @@
 #define HEIGHT 768
 #define WIDTH 1024
 
+static char positions[192][256] = {{0}};
+
 void setInitialPositions(int * x1, int * y1, int * x2, int * y2, int * playerOneDirection, int * playerTwoDirection);
-void parsePositions(int scancode, int * playerOneDirection, int * playerTwoDirection);
+void parsePositions(char scancode, int * playerOneDirection, int * playerTwoDirection);
 void setNewDirection(int * currentPosition, int newPosition);
 void moveCharacter(int currentPosition, int * x, int * y);
 
-void tron(){
+void tron() {
     clearScreen();
-    // sysClearBuffer();
-    /*for(int i = 0; i < 50;i++)
-        for(int j = 0; j < 50;j++)
-            sys_draw_point(i,j,magenta);*/
-    int positions[192][256] = {{0}}; // Hago una matriz y la lleno de cero para despues y fijandome donde estuvieron los jugadores. Hago de esas dimensiones porque son las dimensiones de la pantalla dividida 4
-    int x1, y1, x2, y2; //Para ir fijandome las current positions de cada jugador
-    int playerOneDirection;
-    int playerTwoDirection;
+    sys_clear_buffer();
     int i, j;
-    setInitialPositions(&x1, &y1, &x2, &y2, &playerOneDirection, &playerTwoDirection);
-    positions[y1/4][x1/4] = 1;
-    positions[y2/4][x2/4] = 1;
+    int playerOneDirection = RIGHT;
+    int playerTwoDirection = LEFT;
+    int x1 = WIDTH/4, x2 = (WIDTH*3)/4;
+    int y1 = HEIGHT/2, y2 = HEIGHT/2;
     char isPlaying = 1;
-    int newDirection;
+    char newDirection = 0;
     while (isPlaying){
-      // newDirection = sysCheckBuffer();
-      // parsePositions(newDirection &playerOneDirection, &playerTwoDirection);
-      // moveCharacter(playerOneDirection, &x1, &y1);
-      // moveCharacter(playerTwoDirection, &x2, &y2);
+      newDirection = sys_check_buffer();
+      printf("%d", newDirection);
+      parsePositions(newDirection, &playerOneDirection, &playerTwoDirection);
 
-
+      for(int z=0;z<10000000;z++){
+          ;
+      }
+      
+      positions[y1/4][x1/4] = 1;
+      positions[y2/4][x2/4] = 1;
+      
       for(i = 0; i < 4; i++) {
-        for(j = 0; j < 4 ; j++) {
+        for(j = 0; j < 4; j++) {
           sys_draw_point(x1, y1, magenta);
           sys_draw_point(x2, y2, yellow);
+          moveCharacter(playerOneDirection, &x1, &y1);
+          moveCharacter(playerTwoDirection, &x2, &y2);
         }
       }
 
-      // for(int z=0;z<20000000;z++){
-      //     ;
-      // }
-      // i2 = i + 4;
-      // for(;i < i2;i++){
-      //     for(int j = 10; j < 14; j++){
-      //         sys_draw_point(i, j, magenta);
-
-      //     }
-      // }
+      while((positions[y1/4][x1/4] == 1 && positions[y2/4][x2/4] == 1) && isPlaying) {
+        isPlaying = 0;
+          // if(sysCheckBuffer() != 0) {
+          // }
+      }
     }
-    
-    // sysClearBuffer();
+    sys_clear_buffer();
+    // reiniciateVariables();
     clearScreen();
 }
 
-void setInitialPositions(int * x1, int * y1, int * x2, int * y2, int * playerOneDirection, int * playerTwoDirection) {
-  *y1 = HEIGHT/2;
-  *y2 = HEIGHT/2;
 
-  *x1 = WIDTH/4;
-  *x2 = (WIDTH * 3)/4;
-
-  *playerOneDirection = RIGHT;
-  *playerTwoDirection = LEFT;
-}
+// ! 0 < x1 < WIDTH || !(0 < x2 < WIDTH) || !(0 < y1 < HEIGHT) || !(0 < y2 < HEIGHT) || 
 
 // Otra función auxiliar que se encarge de asignar para donde se mueve
 
-void parsePositions(int scancode, int * playerOneDirection, int * playerTwoDirection) {
+// void reiniciateVariables() {
+
+// }
+
+void parsePositions(char scancode, int * playerOneDirection, int * playerTwoDirection) {
   switch (scancode) {
     case 0x11:
       setNewDirection(playerOneDirection, UP);
@@ -105,19 +99,19 @@ void parsePositions(int scancode, int * playerOneDirection, int * playerTwoDirec
   }
 }
 
-void setNewDirection(int * currentPosition, int newPosition) {
-  if(*currentPosition + newPosition == 0) { //Es para que cuando va a la dirección contraria no haga nada
+void setNewDirection(int * currentDirection, int newDirection) {
+  if(*currentDirection + newDirection == 0) { //Es para que cuando va a la dirección contraria no haga nada
       return;
   }
-  *currentPosition = newPosition;
+  *currentDirection = newDirection;
 }
 
-void moveCharacter(int currentPosition, int * x, int * y) {
-    if (currentPosition == RIGHT) {
+void moveCharacter(int currentDirection, int * x, int * y) {
+    if (currentDirection == RIGHT) {
         *x += 1;
-    } else if (currentPosition == LEFT) {
+    } else if (currentDirection == LEFT) {
         *x -= 1;
-    } else if (currentPosition == DOWN) {
+    } else if (currentDirection == DOWN) {
         *y += 1;
     } else {
         *y -= 1;
