@@ -24,7 +24,7 @@ void print(const char* buf, uint64_t count) {
     sys_write(STDOUT, buf, count);
 }
 
-void clearscreen() {
+void clearScreen() {
     sys_clear_screen();
 }
 

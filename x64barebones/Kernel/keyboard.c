@@ -29,24 +29,28 @@ void keyboard_handler(uint64_t * regDumpPos) {
 		return;
 	}
     
-	if(writePos < BUFFER_SIZE)
-		keyBuffer[writePos++]=c;
+	if(writePos < BUFFER_SIZE) {
+		keyBuffer[writePos++] = c;
+  } else {
+    kbd_clearBuffer();
+    keyBuffer[writePos++] = c;
+  }
 }
 
 unsigned int kbd_readCharacters(char* buf, unsigned int n) {
-    _cli();
-    unsigned int charsRead = 0;
-    unsigned int scancodeIndex;
-    for (scancodeIndex = 0; scancodeIndex < writePos && charsRead < n; scancodeIndex++) {
-        char c = keyBuffer[scancodeIndex];
-        if (c>0 && c<128)
-            buf[charsRead++] = scanCodeTable[c];
-    }
+  _cli();
+  unsigned int charsRead = 0;
+  unsigned int scancodeIndex;
+  for (scancodeIndex = 0; scancodeIndex < writePos && charsRead < n; scancodeIndex++) {
+      char c = keyBuffer[scancodeIndex];
+      if (c>0 && c<128)
+          buf[charsRead++] = scanCodeTable[c];
+  }
 
-    writePos -= scancodeIndex;
-    memcpy(keyBuffer, keyBuffer + scancodeIndex, writePos);
-    _sti();
-    return charsRead;
+  writePos -= scancodeIndex;
+  memcpy(keyBuffer, keyBuffer + scancodeIndex, writePos);
+  _sti();
+  return charsRead;
 }
 
 int kbd_getBufferLength() {
@@ -54,5 +58,8 @@ int kbd_getBufferLength() {
 }
 
 void kbd_clearBuffer() {
-    writePos = 0;
+  for(int i = 0 ; i < writePos ; i++){
+    keyBuffer[i] = 0;
+  } 
+  writePos = 0;
 }

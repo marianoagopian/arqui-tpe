@@ -29,6 +29,6 @@ void printmem(char *arg);
 
 void time();
 
-void tronLightCycle();
+void tron();
 
 #endif

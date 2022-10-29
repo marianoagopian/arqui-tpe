@@ -74,7 +74,7 @@ void callFunction(char * command, char * parameter) {
 		time();
 		break;
 	case 9:
-		tronLightCycle();
+		tron();
 		break;
 	default:
 		invalidCommand();

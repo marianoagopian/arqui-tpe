@@ -11,7 +11,7 @@ char getChar();
 
 void scanf(char* readbuf, uint64_t maxlen);
 
-void clearscreen();
+void clearScreen();
 
 int strlen(const char * str);
 

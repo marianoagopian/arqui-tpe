@@ -11,7 +11,7 @@ static char * newLine = "$>:";
 
 
 int main() {
-	clearscreen();	
+	clearScreen();	
 
 	print("Welcome to Shell! Type \"HELP\" for a list of commands.\n\n", 55);
 	while(1) {
