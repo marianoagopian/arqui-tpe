@@ -141,7 +141,7 @@ void level1(char *data){
 void level2(char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
     	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h);
+        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
     	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos2[0] = penColor, pos2[1] = penColor;
     	if (*data & 0x02) pos[2] = penColor, pos[3] = penColor, pos2[2] = penColor, pos2[3] = penColor;
     	if (*data & 0x04) pos[4] = penColor, pos[5] = penColor, pos2[4] = penColor, pos2[5] = penColor;

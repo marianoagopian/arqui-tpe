@@ -34,10 +34,6 @@ int sysWrite(int fd, char * buf, int count) {
 	return count;
 }
 
-void sysDrawPoint(uint16_t x, uint16_t y, Color color) {
-	scr_setPixel(x, y, color);
-}
-
 uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) {
 	scr_setPenPosition(x, y);
 	scr_setPenColor(color);

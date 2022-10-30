@@ -33,30 +33,16 @@ void tron() {
       parsePositions(newDirection, &playerOneDirection, &playerTwoDirection);
 
       for(int z=0;z<20000000;z++){
-          ;
+        ;
       }
 
       positions[y1/4][x1/4] = 1;
       positions[y2/4][x2/4] = 1;
 
-      for(i = 0; i < 4; i++) {
-        for(j = 0; j < 4; j++) {
-          if(playerOneDirection == UP || playerOneDirection == DOWN){
-            sys_draw_point(x1 + j, y1, magenta);
-          }
-          else{
-            sys_draw_point(x1, y1 + j, magenta);
-          }
-          if(playerTwoDirection == UP || playerTwoDirection == DOWN){
-            sys_draw_point(x2 + j, y2, yellow);       
-          }
-          else{
-            sys_draw_point(x2, y2 + j, yellow);
-          }   
-        }
-        moveCharacter(playerOneDirection, &x1, &y1);
-        moveCharacter(playerTwoDirection, &x2, &y2);
-      }
+      sys_draw_rect(x1,y1,4,4,magenta);
+      sys_draw_rect(x2,y2,4,4,yellow);
+      moveCharacter(playerOneDirection, &x1, &y1);
+      moveCharacter(playerTwoDirection, &x2, &y2);
 
       if(positions[y1/4][x1/4] == 1 || positions[y2/4][x2/4] == 1 ) {
         break;
@@ -122,12 +108,12 @@ void setNewDirection(int * currentDirection, int newDirection) {
 
 void moveCharacter(int currentDirection, int * x, int * y) {
     if (currentDirection == RIGHT) {
-        *x += 1;
+        *x += 4;
     } else if (currentDirection == LEFT) {
-        *x -= 1;
+        *x -= 4;
     } else if (currentDirection == DOWN) {
-        *y += 1;
+        *y += 4;
     } else {
-        *y -= 1;
+        *y -= 4;
     }
 }

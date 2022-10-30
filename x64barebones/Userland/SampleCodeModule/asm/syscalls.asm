@@ -5,7 +5,7 @@ GLOBAL sys_clear_screen
 GLOBAL sys_info_reg
 GLOBAL sys_time
 GLOBAL sys_printmem
-GLOBAL sys_draw_point
+GLOBAL sys_draw_rect
 GLOBAL sys_screen_size
 GLOBAL sys_check_buffer
 GLOBAL sys_clear_buffer
@@ -48,7 +48,7 @@ sys_printmem:
   int 80h
   ret
 
-sys_draw_point:
+sys_draw_rect:
   mov rax, 7
   int 80h
   ret

@@ -29,7 +29,7 @@ uint32_t sys_write_at(const char* buf, uint64_t count, uint16_t x, uint16_t y, C
 // void sys_drawline(uint16_t fromX, uint16_t fromY, uint16_t toX, uint16_t toY, Color color);
 uint8_t sys_info_reg(uint64_t reg[15]);
 unsigned int sys_printmem(uint64_t position, char * buffer);
-void sys_draw_point(uint16_t x, uint16_t y, Color color);
+void sys_draw_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);
 int sys_screen_size();
 void sys_clear_buffer();
 char sys_check_buffer();

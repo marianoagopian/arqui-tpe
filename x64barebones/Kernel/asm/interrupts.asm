@@ -28,7 +28,7 @@ EXTERN sysWriteAt
 EXTERN sysInfoReg
 EXTERN sysTime
 EXTERN sysPrintmem
-EXTERN sysDrawPoint
+EXTERN scr_drawRect
 EXTERN sysClearBuffer
 EXTERN sysCheckBuffer
 EXTERN setLevel
@@ -174,7 +174,7 @@ _irq80Handler:
 	cmp rax, 6
 	je sys_printmem
 	cmp rax, 7
-	je sys_draw_point
+	je sys_draw_rect
 	cmp rax, 8
 	je sys_screen_size
 	cmp rax, 9
@@ -218,8 +218,8 @@ sys_printmem:
 call sysPrintmem
 jmp continue
 
-sys_draw_point:
-call sysDrawPoint
+sys_draw_rect:
+call scr_drawRect
 jmp continue
 
 sys_screen_size:
