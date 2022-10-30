@@ -2,6 +2,7 @@
   "files.associations": {
     "syscalls.h": "c",
     "functions.h": "c",
-    "color.h": "c"
+    "color.h": "c",
+    "commands.h": "c"
   }
 }

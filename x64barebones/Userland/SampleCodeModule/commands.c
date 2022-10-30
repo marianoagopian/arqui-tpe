@@ -47,7 +47,7 @@ void callFunction(char * command, char * parameter) {
   	}
 	switch (functionIndex) {
     case 0:
-        sys_clear_screen();
+    sys_clear_screen();
       break;
     case 1:
       decreaseFontSize();

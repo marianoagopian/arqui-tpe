@@ -6,7 +6,6 @@ GLOBAL sys_info_reg
 GLOBAL sys_time
 GLOBAL sys_printmem
 GLOBAL sys_draw_rect
-GLOBAL sys_screen_size
 GLOBAL sys_check_buffer
 GLOBAL sys_clear_buffer
 GLOBAL sys_set_level
@@ -55,12 +54,12 @@ sys_draw_rect:
   int 80h
   ret
 
-sys_screen_size:
+sys_check_buffer:
   mov rax, 8
   int 80h
   ret
 
-sys_check_buffer:
+sys_holder:
   mov rax, 9
   int 80h
   ret
@@ -75,12 +74,7 @@ sys_set_level:
   int 80h
   ret
 
-sys_holder:
-  mov rax, 12
-  int 80h
-  ret
-
 sys_get_level:
-  mov rax, 13
+  mov rax, 12
   int 80h
   ret

@@ -7,7 +7,7 @@ const char* helpString =
 	"divbyzero					    Simulates the error that occurs when dividing by zero.\n"
 	"help							      Prints all commands and their description.\n"
 	"increasefontsize				Reduces the font size.\n"
-	"inforeg						    Prints the value of the registers when screenshotted. Use ; or ñ to screenshot\n"
+	"inforeg						    Prints the value of the registers when screenshotted. Use ; to screenshot\n"
 	"invalidopcode		      Simulates the error that occurs when using an invalid operation code.\n"
   "printmem						    Given an address pointer prints the following 32 bytes.\n"
 	"time							      Prints the current time.\n"

@@ -34,7 +34,7 @@ int sysWrite(int fd, char * buf, int count) {
 	return count;
 }
 
-uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) {
+uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) { //Todavía no lo usamos
 	scr_setPenPosition(x, y);
 	scr_setPenColor(color);
 	for (int i = 0; i < count; i++)
@@ -44,10 +44,6 @@ uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Co
 
 void sysClear() {
   scr_clear();
-}
-
-int sysScreenSize() {
-  return scr_getWidth() | scr_getHeight() << 32;
 }
 
 unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
@@ -60,7 +56,7 @@ unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
 	return totalRead;
 }
 
-static int hasScreenshoted=0;
+static int hasScreenshoted = 0;
 
 void saveInfoReg(uint64_t * regDumpPos) {
 	hasScreenshoted=1;
@@ -71,7 +67,7 @@ void saveInfoReg(uint64_t * regDumpPos) {
 
 int sysInfoReg(uint64_t * buffer) {
 	if(hasScreenshoted == 0){
-		char *aux = "Press the SHIFT button before calling InfoReg";
+		char *aux = "Press the ; button before calling InfoReg";
 		memcpy(buffer, aux, _strlen(aux));
 		return 0;
 	}

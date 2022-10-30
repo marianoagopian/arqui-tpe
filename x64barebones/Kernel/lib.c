@@ -114,20 +114,3 @@ void printRegisters(uint64_t * registerDumpPos) {
 		sysWrite(STDERR, "\n",1);
 	}
 }
-
-char * intToString(uint64_t num, char * buffer) {
-   if(num==0) {
-        buffer[0] = '0';
-        buffer[1] = 0;
-        return 2;
-    }
-    int i = 0;
-    while(num > 0) {
-        buffer[i++] = num%10 + '0';
-        num /= 10;
-    }
-    reverseString(buffer, i);
-    buffer[i] = 0;
-
-    return i;
-}

@@ -40,7 +40,7 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n) {
   unsigned int charsRead = 0;
   unsigned int scancodeIndex;
   for (scancodeIndex = 0; scancodeIndex < writePos && charsRead < n; scancodeIndex++) {
-      char c = keyBuffer[scancodeIndex];
+      unsigned char c = keyBuffer[scancodeIndex];
       if (c>0 && c<128)
           buf[charsRead++] = scanCodeTable[c];
   }

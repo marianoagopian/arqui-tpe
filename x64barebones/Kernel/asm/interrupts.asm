@@ -178,16 +178,14 @@ _irq80Handler:
 	cmp rax, 7
 	je sys_draw_rect
 	cmp rax, 8
-	je sys_screen_size
-	cmp rax, 9
 	je sys_check_buffer
+  cmp rax, 9
+	je sys_holder
   cmp rax, 10
 	je sys_clear_buffer
 	cmp rax, 11
 	je sys_set_level
   cmp rax, 12
-	je sys_holder
-  cmp rax, 13
 	je sys_get_level
 	jmp continue
 
@@ -226,10 +224,6 @@ sys_printmem:
 
 sys_draw_rect:
   call scr_drawRect
-  jmp continue
-
-sys_screen_size:
-  call sysScreenSize
   jmp continue
 
 sys_clear_buffer:

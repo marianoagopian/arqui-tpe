@@ -16,6 +16,4 @@ int hexToString(uint64_t num, char * buffer, int fixedLength);
 
 void printRegisters(uint64_t * registerDumpPos);
 
-char * intToString(uint64_t num, char* buf);
-
 #endif

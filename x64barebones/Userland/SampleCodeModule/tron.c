@@ -21,12 +21,12 @@ void resetPositionsArray();
 void tron() {
   clearScreen();
 
-  printf("Bienvenido al Tron! El jugador 1 (color magenta) usara las teclas WASD para moverse y el jugador 2 (color amarillo) usara las flechas del teclado\n\n\n");
+  printf("Welcome to Tron! player 1 (magenta color) will use the keys WASD to move while player 2 (yellow color) will use the arrows keys\n\n\n");
 
-  printf("Toque la letra 'p' para comenzar\n");
+  printf("Press the key 'b' to begin\n");
 
-  while(getChar() != 'p') {
-    printf("Toque la letra 'p' para comenzar\n");
+  while(getChar() != 'b') {
+    printf("Press the key 'b' to begin\n");
   }
 
   clearScreen();
@@ -71,9 +71,9 @@ void tron() {
   clearScreen();
 
   if(won == 0) {
-    printf("Han perdido ambos jugadores, toque la tecla 'c' para continuar\n");
+    printf("Both players have lost, press the key 'c' to continue\n");
   } else {
-    printf("Ha ganado el jugador %d, toque la tecla 'c' para continuar\n", won);
+    printf("Player %d has won, press the key 'c' to continue\n", won);
   }
 
   while(getChar() != 'c') {

@@ -10,7 +10,7 @@
 
 static const uint8_t scanCodeTable[256] = {
   0,    0,  '1',  '2',  '3',  '4',  '5',  '6',   '7',  '8',  '9',   '0',   '-',  '=',    '\b',
-  '    ', 'q',  'w',  'e',  'r',  't',  'y',  'u',  'i',   'o',  'p',  '[',   ']',  '\n',
+  '\t', 'q',  'w',  'e',  'r',  't',  'y',  'u',  'i',   'o',  'p',  '[',   ']',  '\n',
   0,     'a',  's', 'd',  'f',  'g',  'h',  'j',  'k',  'l',  ';',  '\'',
   0,    0,  '\\',   'z',  'x',     'c', 'v', 'b',  'n',  'm',  ',',  '.',  '/',    0,
   '*',     0,  ' ',    0,     0,     0,    0,       0,         0,
@@ -167,10 +167,3 @@ void printf(char *fmt,...){
     }
     va_end(ap); 
 }
-
-// void screenSize(int *width, int *height){
-//     int size = sys_screen_size();
-//     *width = (size & 0xFFFFFFFF);
-//     *height = (size >> 32);
-// }
-
