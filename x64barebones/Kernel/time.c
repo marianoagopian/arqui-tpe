@@ -1,4 +1,5 @@
 #include <time.h>
+#include <interrupts.h>
 
 static unsigned long ticks = 0;
 
@@ -16,4 +17,11 @@ int seconds_elapsed() {
 
 int milliseconds(){
 	return MILLIS(ticks);
+}
+
+void holder(int time) {
+  int startingTicks = ticks;
+  while(ticks - startingTicks < time) {
+    _hlt();
+  }
 }

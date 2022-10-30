@@ -9,7 +9,8 @@ GLOBAL sys_draw_rect
 GLOBAL sys_screen_size
 GLOBAL sys_check_buffer
 GLOBAL sys_clear_buffer
-GLOBAL set_level
+GLOBAL sys_set_level
+GLOBAL sys_holder
 section .text
 
 sys_read:
@@ -68,7 +69,12 @@ sys_clear_buffer:
   int 80h
   ret
 
-set_level:
+sys_set_level:
   mov rax, 11
+  int 80h
+  ret
+
+sys_holder:
+  mov rax, 12
   int 80h
   ret

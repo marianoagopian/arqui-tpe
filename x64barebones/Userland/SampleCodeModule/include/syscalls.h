@@ -33,6 +33,7 @@ void sys_draw_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Colo
 int sys_screen_size();
 void sys_clear_buffer();
 char sys_check_buffer();
-void set_level(int num);
+void sys_set_level(int num);
+void sys_holder(int time);
 
 #endif

@@ -31,9 +31,9 @@ void clearScreen() {
 char getChar() {
 	char c;
 
-    while (sys_read(STDIN, &c, 1) == 0){
-        ;
-    }
+  while (sys_read(STDIN, &c, 1) == 0){
+      ;
+  }
 	return c;
 }
 

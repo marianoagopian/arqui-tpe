@@ -23,5 +23,5 @@ int my_getnbr(char *str)
 }
 
 void changeFontSize(char *parameter){
-    set_level(my_getnbr(parameter));
+    sys_set_level(my_getnbr(parameter));
 }

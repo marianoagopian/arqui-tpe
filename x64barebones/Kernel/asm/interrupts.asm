@@ -32,6 +32,7 @@ EXTERN scr_drawRect
 EXTERN sysClearBuffer
 EXTERN sysCheckBuffer
 EXTERN setLevel
+EXTERN holder
 
 SECTION .text
 
@@ -179,10 +180,12 @@ _irq80Handler:
 	je sys_screen_size
 	cmp rax, 9
 	je sys_check_buffer
-  	cmp rax, 10
+  cmp rax, 10
 	je sys_clear_buffer
 	cmp rax, 11
-	je set_level
+	je sys_set_level
+  cmp rax, 12
+	je sys_holder
 	jmp continue
 
 continue:
@@ -234,8 +237,12 @@ sys_check_buffer:
 call sysCheckBuffer
 jmp continue
 
-set_level:
+sys_set_level:
 call setLevel
+jmp continue
+
+sys_holder:
+call holder
 jmp continue
 
 ;Zero Division Exception
