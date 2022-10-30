@@ -33,5 +33,6 @@ void sys_draw_point(uint16_t x, uint16_t y, Color color);
 int sys_screen_size();
 void sys_clear_buffer();
 char sys_check_buffer();
+void set_level(int num);
 
 #endif

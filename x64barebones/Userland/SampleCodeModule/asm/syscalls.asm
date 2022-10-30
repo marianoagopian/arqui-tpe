@@ -9,6 +9,7 @@ GLOBAL sys_draw_point
 GLOBAL sys_screen_size
 GLOBAL sys_check_buffer
 GLOBAL sys_clear_buffer
+GLOBAL set_level
 section .text
 
 sys_read:
@@ -64,5 +65,10 @@ sys_check_buffer:
 
 sys_clear_buffer:
   mov rax, 10
+  int 80h
+  ret
+
+set_level:
+  mov rax, 11
   int 80h
   ret

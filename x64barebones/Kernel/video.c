@@ -115,6 +115,47 @@ void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color
     }
 }
 
+int level = 1;
+
+void setLevel(int num){
+    level = num;
+}
+
+void level1(char *data){
+    for (int h=0; h<CHAR_HEIGHT * level; h++) {
+    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
+    	if (*data & 0x01) pos[0] = penColor;
+    	if (*data & 0x02) pos[1] = penColor;
+    	if (*data & 0x04) pos[2] = penColor;
+    	if (*data & 0x08) pos[3] = penColor;
+    	if (*data & 0x10) pos[4] = penColor;
+    	if (*data & 0x20) pos[5] = penColor;
+    	if (*data & 0x40) pos[6] = penColor;
+    	if (*data & 0x80) pos[7] = penColor;
+    	data++;
+    	if (*data & 0x01) pos[8] = penColor;
+    	data++;
+    }
+}
+
+void level2(char *data){
+    for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
+    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
+        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h);
+    	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos2[0] = penColor, pos2[1] = penColor;
+    	if (*data & 0x02) pos[2] = penColor, pos[3] = penColor, pos2[2] = penColor, pos2[3] = penColor;
+    	if (*data & 0x04) pos[4] = penColor, pos[5] = penColor, pos2[4] = penColor, pos2[5] = penColor;
+    	if (*data & 0x08) pos[6] = penColor, pos[7] = penColor, pos2[6] = penColor, pos2[7] = penColor;
+    	if (*data & 0x10) pos[8] = penColor, pos[9] = penColor, pos2[8] = penColor, pos2[9] = penColor;
+    	if (*data & 0x20) pos[10] = penColor, pos[11] = penColor, pos2[10] = penColor, pos2[11] = penColor;
+    	if (*data & 0x40) pos[12] = penColor, pos[13] = penColor, pos2[12] = penColor, pos2[13] = penColor;
+    	if (*data & 0x80) pos[14] = penColor, pos[15] = penColor, pos2[14] = penColor, pos2[15] = penColor;
+    	data++;
+    	if (*data & 0x01) pos[16] = penColor, pos[17] = penColor, pos2[16] = penColor, pos2[17] = penColor;
+    	data++;
+    }
+}
+
 void scr_printChar(char c) {
     if(c == 0){
         return;
@@ -132,31 +173,24 @@ void scr_printChar(char c) {
             //penX = (sysScreenSize() / 9 - 1) * 9;
             return;
         }
-        penX -= CHAR_WIDTH;
-        scr_drawRect(penX, penY, 9, 16, black);
+        penX -= CHAR_WIDTH * level;
+        scr_drawRect(penX, penY, CHAR_WIDTH * level, CHAR_HEIGHT * level, black);
         return;
     }
 
+
     if (c >= FIRST_CHAR && c <= LAST_CHAR) {
 	    const char* data = font + 32*(c-33);
-	    for (int h=0; h<16; h++) {
-    		Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-    		if (*data & 0x01) pos[0] = penColor;
-    		if (*data & 0x02) pos[1] = penColor;
-    		if (*data & 0x04) pos[2] = penColor;
-    		if (*data & 0x08) pos[3] = penColor;
-    		if (*data & 0x10) pos[4] = penColor;
-    		if (*data & 0x20) pos[5] = penColor;
-    		if (*data & 0x40) pos[6] = penColor;
-    		if (*data & 0x80) pos[7] = penColor;
-    		data++;
-    		if (*data & 0x01) pos[8] = penColor;
-    		data++;
-    	}
+	    if(level == 1){
+            level1(data);
+        }
+        if(level == 2){
+            level2(data);
+        }
     }
 
-    penX += CHAR_WIDTH;
-    if (penX > screenData->width - CHAR_WIDTH)
+    penX += CHAR_WIDTH * level;
+    if (penX > screenData->width - level * CHAR_WIDTH)
         scr_printNewline();
 }
 
@@ -164,14 +198,14 @@ void scr_printNewline(void) {
     penX = 0; // pen x is set to full left.
 
     // If there is space for another line, we simply advance the pen y. Otherwise, we move up the entire screen and clear the lower part.
-    if (penY + (2*CHAR_HEIGHT) <= screenData->height) {
-        penY += CHAR_HEIGHT;
+    if (penY + (2*CHAR_HEIGHT * level) <= screenData->height) {
+        penY += CHAR_HEIGHT * level;
     } else {
         void* dst = (void*)((uint64_t)screenData->framebuffer);
-        void* src = (void*)(dst + 3 * (CHAR_HEIGHT * (uint64_t)screenData->width));
-        uint64_t len = 3 * ((uint64_t)screenData->width * (screenData->height - CHAR_HEIGHT));
+        void* src = (void*)(dst + 3 * (CHAR_HEIGHT * level * (uint64_t)screenData->width));
+        uint64_t len = 3 * ((uint64_t)screenData->width * (screenData->height - level * CHAR_HEIGHT));
         memcpy(dst, src, len);
-        memset(dst+len, 0, 3 * (uint64_t)screenData->width * CHAR_HEIGHT);
+        memset(dst+len, 0, 3 * (uint64_t)screenData->width * level * CHAR_HEIGHT);
     }
 }
 

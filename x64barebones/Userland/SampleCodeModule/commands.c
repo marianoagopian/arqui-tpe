@@ -5,7 +5,7 @@
 
 #define PARAMETERS_ERROR "Parameters are not needed for this command, try without them.\n"
 
-static const char* commands[COMMANDS_QTY] = {"clear", "decreasefontsize", "divbyzero", "help", "increasefontsize", "inforeg",  "invalidopcode", "printmem",  "time", "tron"};
+static const char* commands[COMMANDS_QTY] = {"clear", "decreasefontsize", "divbyzero", "help", "increasefontsize", "inforeg",  "invalidopcode", "printmem",  "time", "tron", "changefontsize"};
 
 void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH], char readbuf[BUFFER_LENGTH]) {
 	int i, j;
@@ -41,7 +41,7 @@ void callFunction(char * command, char * parameter) {
 			functionIndex = i;
 		}
 	}
-	if((functionIndex != 7 && functionIndex != -1) && *parameter != 0) {
+	if((functionIndex != 7 && functionIndex != 10 && functionIndex != -1) && *parameter != 0) {
     	print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
     return;
   	}
@@ -75,6 +75,9 @@ void callFunction(char * command, char * parameter) {
 		break;
 	case 9:
 		tron();
+		break;
+	case 10:
+		changeFontSize(parameter);
 		break;
 	default:
 		invalidCommand();

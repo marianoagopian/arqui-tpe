@@ -32,7 +32,7 @@ void tron() {
       printf("%d", newDirection);
       parsePositions(newDirection, &playerOneDirection, &playerTwoDirection);
 
-      for(int z=0;z<10000000;z++){
+      for(int z=0;z<20000000;z++){
           ;
       }
 
@@ -41,22 +41,32 @@ void tron() {
 
       for(i = 0; i < 4; i++) {
         for(j = 0; j < 4; j++) {
-          sys_draw_point(x1, y1, magenta);
-          sys_draw_point(x2, y2, yellow);
-          moveCharacter(playerOneDirection, &x1, &y1);
-          moveCharacter(playerTwoDirection, &x2, &y2);
+          if(playerOneDirection == UP || playerOneDirection == DOWN){
+            sys_draw_point(x1 + j, y1, magenta);
+          }
+          else{
+            sys_draw_point(x1, y1 + j, magenta);
+          }
+          if(playerTwoDirection == UP || playerTwoDirection == DOWN){
+            sys_draw_point(x2 + j, y2, yellow);       
+          }
+          else{
+            sys_draw_point(x2, y2 + j, yellow);
+          }   
         }
-        if(positions[y1/4][x1/4] == 1 || positions[y2/4][x2/4] == 1) {
-          i = 4;
-          j = 4;
-        }
+        moveCharacter(playerOneDirection, &x1, &y1);
+        moveCharacter(playerTwoDirection, &x2, &y2);
       }
 
-      while((positions[y1/4][x1/4] == 1 && positions[y2/4][x2/4] == 1) && isPlaying) {
+      if(positions[y1/4][x1/4] == 1 || positions[y2/4][x2/4] == 1 ) {
+        break;
+      }
+
+      /*while((positions[y1/4][x1/4] == 1 && positions[y2/4][x2/4] == 1) && isPlaying) {
         isPlaying = 0;
           // if(sysCheckBuffer() != 0) {
           // }
-      }
+      }*/
     }
     sys_clear_buffer();
     // reiniciateVariables();
