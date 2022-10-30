@@ -57,4 +57,8 @@ uint32_t scr_print(const char* s);
 Returns the new pen position as a 32 bit number, where the 16 lowest bits are the x and the upper 16 bits are the y. */
 uint32_t scr_println(const char* s);
 
+int getLevel();
+
+void setLevel(int num);
+
 #endif

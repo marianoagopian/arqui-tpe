@@ -35,5 +35,6 @@ void sys_clear_buffer();
 char sys_check_buffer();
 void sys_set_level(int num);
 void sys_holder(int time);
+int sys_get_level();
 
 #endif

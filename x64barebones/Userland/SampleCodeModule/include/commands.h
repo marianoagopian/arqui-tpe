@@ -1,7 +1,7 @@
 #ifndef _COMMANDS_H_
 #define _COMMANDS_H_
 
-#define COMMANDS_QTY 11
+#define COMMANDS_QTY 10
 #define PARAMETER_LENGTH 10
 #define BUFFER_LENGTH 32
 
@@ -19,18 +19,16 @@ void divByZero();
 
 void help();
 
-//void increaseFontSize();
+void increaseFontSize();
 
 void inforeg();
 
-//void invalidOperationCode();
+void invalidOperationCode();
 
 void printmem(char *arg);
 
 void time();
 
 void tron();
-
-void changeFontSize(char *parameter);
 
 #endif

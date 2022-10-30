@@ -33,6 +33,7 @@ EXTERN sysClearBuffer
 EXTERN sysCheckBuffer
 EXTERN setLevel
 EXTERN holder
+EXTERN getLevel
 
 SECTION .text
 
@@ -186,6 +187,8 @@ _irq80Handler:
 	je sys_set_level
   cmp rax, 12
 	je sys_holder
+  cmp rax, 13
+	je sys_get_level
 	jmp continue
 
 continue:
@@ -194,56 +197,60 @@ continue:
 	iretq
 
 sys_read:
-call sysRead
-jmp continue
+  call sysRead
+  jmp continue
 
 sys_write:
-call sysWrite
-jmp continue
+  call sysWrite
+  jmp continue
 
 sys_inforeg:
-call sysInfoReg
-jmp continue
+  call sysInfoReg
+  jmp continue
 
 sys_clear_screan:
-call sysClear
-jmp continue
+  call sysClear
+  jmp continue
 
 sys_write_at:
-call sysWriteAt
-jmp continue
+  call sysWriteAt
+  jmp continue
 
 sys_time:
-call sysTime
-jmp continue
+  call sysTime
+  jmp continue
 
 sys_printmem:
-call sysPrintmem
-jmp continue
+  call sysPrintmem
+  jmp continue
 
 sys_draw_rect:
-call scr_drawRect
-jmp continue
+  call scr_drawRect
+  jmp continue
 
 sys_screen_size:
-call sysScreenSize
-jmp continue
+  call sysScreenSize
+  jmp continue
 
 sys_clear_buffer:
-call sysClearBuffer
-jmp continue
+  call sysClearBuffer
+  jmp continue
 
 sys_check_buffer:
-call sysCheckBuffer
-jmp continue
+  call sysCheckBuffer
+  jmp continue
 
 sys_set_level:
-call setLevel
-jmp continue
+  call setLevel
+  jmp continue
 
 sys_holder:
-call holder
-jmp continue
+  call holder
+  jmp continue
+
+sys_get_level:
+  call getLevel
+  jmp continue
 
 ;Zero Division Exception
 _exception0Handler:

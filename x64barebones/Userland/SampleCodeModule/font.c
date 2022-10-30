@@ -1,27 +1,18 @@
 #include <commands.h>
 #include <syscalls.h>
 
-int my_getnbr(char *str)
-{
-  int result;
-  int puiss;
-
-  result = 0;
-  puiss = 1;
-  while (('-' == (*str)) || ((*str) == '+'))
-  {
-      if (*str == '-')
-        puiss = puiss * -1;
-      str++;
+void increaseFontSize() {
+  if(sys_get_level() == 2) {
+    printf("El tamaño es el mas grande posible\n"); //Hicimos hasta dos porque 3 nos parecía muy grande
+    return;
   }
-  while ((*str >= '0') && (*str <= '9'))
-  {
-      result = (result * 10) + ((*str) - '0');
-      str++;
-  }
-  return (result * puiss);
+  sys_set_level(2);
 }
 
-void changeFontSize(char *parameter){
-    sys_set_level(my_getnbr(parameter));
+void decreaseFontSize() {
+  if(sys_get_level() == 1) {
+    printf("El tamaño es el mas chico posible\n");
+    return;
+  }
+  sys_set_level(1);
 }

@@ -5,7 +5,7 @@
 
 #define PARAMETERS_ERROR "Parameters are not needed for this command, try without them.\n"
 
-static const char* commands[COMMANDS_QTY] = {"clear", "decreasefontsize", "divbyzero", "help", "increasefontsize", "inforeg",  "invalidopcode", "printmem",  "time", "tron", "changefontsize"};
+static const char* commands[COMMANDS_QTY] = { "clear", "decreasefontsize", "divbyzero", "help", "increasefontsize", "inforeg",  "invalidopcode", "printmem",  "time", "tron" };
 
 void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH], char readbuf[BUFFER_LENGTH]) {
 	int i, j;
@@ -47,40 +47,37 @@ void callFunction(char * command, char * parameter) {
   	}
 	switch (functionIndex) {
     case 0:
-      	sys_clear_screen();
-    	break;
-	// case 1:
-	// 	decreaseFontSize();
-	// 	break;
-	case 2:
-		divByZero();
-		break;
-	case 3:
-		help();
-		break;
-	// case 4:
-	// 	increaseFontSize();
-	// 	break;
-	case 5:
-		infoReg();
-		break;
-	case 6:
-		invalidOperationCode();
-		break;
-	case 7:
-		printmem(parameter);
-		break;
-	case 8:
-		time();
-		break;
-	case 9:
-		tron();
-		break;
-	case 10:
-		changeFontSize(parameter);
-		break;
-	default:
-		invalidCommand();
-		break;
-	}
+        sys_clear_screen();
+      break;
+    case 1:
+      decreaseFontSize();
+      break;
+    case 2:
+      divByZero();
+      break;
+    case 3:
+      help();
+      break;
+    case 4:
+      increaseFontSize();
+      break;
+    case 5:
+      infoReg();
+      break;
+    case 6:
+      invalidOperationCode();
+      break;
+    case 7:
+      printmem(parameter);
+      break;
+    case 8:
+      time();
+      break;
+    case 9:
+      tron();
+      break;
+    default:
+      invalidCommand();
+      break;
+    }
 }

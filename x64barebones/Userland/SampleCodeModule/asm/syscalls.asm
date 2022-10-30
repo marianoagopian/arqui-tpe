@@ -11,6 +11,7 @@ GLOBAL sys_check_buffer
 GLOBAL sys_clear_buffer
 GLOBAL sys_set_level
 GLOBAL sys_holder
+GLOBAL sys_get_level
 section .text
 
 sys_read:
@@ -76,5 +77,10 @@ sys_set_level:
 
 sys_holder:
   mov rax, 12
+  int 80h
+  ret
+
+sys_get_level:
+  mov rax, 13
   int 80h
   ret
