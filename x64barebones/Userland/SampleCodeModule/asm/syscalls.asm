@@ -1,6 +1,5 @@
 GLOBAL sys_read
 GLOBAL sys_write
-GLOBAL sys_write_at
 GLOBAL sys_clear_screen
 GLOBAL sys_info_reg
 GLOBAL sys_time
@@ -35,12 +34,6 @@ sys_time:
 
 sys_clear_screen:
   mov rax, 4
-  int 80h
-  ret
-
-sys_write_at:
-  mov rax, 5
-  mov r10, rcx
   int 80h
   ret
 

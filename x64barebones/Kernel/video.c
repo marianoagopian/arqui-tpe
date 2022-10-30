@@ -51,33 +51,8 @@ static void* getPtrToPixel(uint16_t x, uint16_t y) {
 uint16_t penX = 0, penY = 0;
 Color penColor = {0x7F, 0x7F, 0x7F};
 
-uint16_t scr_getWidth(void) {
-    return screenData->width;
-}
-
-void scr_setPenPosition(uint16_t x, uint16_t y) {
-    // We clamp the pen (x,y) to ensure there is enough space to draw a char in that position.
-    uint16_t maxX = screenData->width - CHAR_WIDTH;
-    uint16_t maxY = screenData->height - CHAR_HEIGHT;
-
-    penX = x < maxX ? x : maxX;
-    penY = y < maxY ? y : maxY;
-}
-
 void scr_setPenColor(Color color) {
   penColor = color;
-}
-
-uint16_t scr_getHeight(void) {
-    return screenData->height;
-}
-
-uint16_t scr_getPenX(void) {
-    return penX;
-}
-
-uint16_t scr_getPenY(void) {
-    return penY;
 }
 
 void scr_clear(void) {
@@ -86,14 +61,6 @@ void scr_clear(void) {
         *pos = 0;
     penX = 0;
     penY = 0;
-}
-
-void scr_setPixel(uint16_t x, uint16_t y, Color color) {
-    if (x >= screenData->width || y >= screenData->height)
-        return;
-
-    Color* pos = (Color*)getPtrToPixel(x, y);
-    *pos = color;
 }
 
 void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
@@ -125,7 +92,7 @@ int getLevel() {
   return level;
 }
 
-void level1(const char *data){
+static void level1(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h++) {
     	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
     	if (*data & 0x01) pos[0] = penColor;
@@ -142,7 +109,7 @@ void level1(const char *data){
     }
 }
 
-void level2(const char *data){
+static void level2(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
     	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
       Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
@@ -216,11 +183,5 @@ void scr_printNewline(void) {
 uint32_t scr_print(const char* s) {
     for (; *s != 0; s++)
 		  scr_printChar(*s);
-    return penX | ((uint32_t)penY << 16);
-}
-
-uint32_t scr_println(const char* s) {
-    scr_print(s);
-    scr_printNewline();
     return penX | ((uint32_t)penY << 16);
 }

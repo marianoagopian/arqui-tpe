@@ -74,8 +74,6 @@ void reverseString(char * string, int length) {
     }
 }
 
-
-
 int hexToString(uint64_t num, char * buffer, int fixedLength) {
     int i = 0;
 

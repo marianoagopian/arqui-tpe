@@ -24,16 +24,15 @@ EXTERN sysWrite
 EXTERN sysRead
 EXTERN sysClear
 EXTERN sysScreenSize
-EXTERN sysWriteAt
 EXTERN sysInfoReg
 EXTERN sysTime
 EXTERN sysPrintmem
-EXTERN scr_drawRect
+EXTERN sysDrawRect
 EXTERN sysClearBuffer
 EXTERN sysCheckBuffer
-EXTERN setLevel
-EXTERN holder
-EXTERN getLevel
+EXTERN sysSetLevel
+EXTERN sysHolder
+EXTERN sysGetLevel
 
 SECTION .text
 
@@ -171,8 +170,6 @@ _irq80Handler:
 	je sys_time
 	cmp rax, 4
 	je sys_clear_screan
-	cmp rax, 5
-	je sys_write_at
 	cmp rax, 6
 	je sys_printmem
 	cmp rax, 7
@@ -210,10 +207,6 @@ sys_clear_screan:
   call sysClear
   jmp continue
 
-sys_write_at:
-  call sysWriteAt
-  jmp continue
-
 sys_time:
   call sysTime
   jmp continue
@@ -223,7 +216,7 @@ sys_printmem:
   jmp continue
 
 sys_draw_rect:
-  call scr_drawRect
+  call sysDrawRect
   jmp continue
 
 sys_clear_buffer:
@@ -235,15 +228,15 @@ sys_check_buffer:
   jmp continue
 
 sys_set_level:
-  call setLevel
+  call sysSetLevel
   jmp continue
 
 sys_holder:
-  call holder
+  call sysHolder
   jmp continue
 
 sys_get_level:
-  call getLevel
+  call sysGetLevel
   jmp continue
 
 ;Zero Division Exception

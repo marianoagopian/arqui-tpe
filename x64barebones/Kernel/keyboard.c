@@ -51,10 +51,6 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n) {
   return charsRead;
 }
 
-int kbd_getBufferLength() {
-  return writePos;
-}
-
 void kbd_clearBuffer() {
   for(int i = 0 ; i < writePos ; i++){
     keyBuffer[i] = 0;

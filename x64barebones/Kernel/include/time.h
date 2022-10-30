@@ -9,4 +9,6 @@ int seconds_elapsed();
 
 int milliseconds();
 
+void holder(int time);
+
 #endif

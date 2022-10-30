@@ -4,6 +4,7 @@
 #include <lib.h>
 #include <interrupts.h>
 #include <RTC.h>
+#include <time.h>
 
 #define MAX_MEM_READ 16
 #define BYTE_LENGTH 2
@@ -32,14 +33,6 @@ int sysWrite(int fd, char * buf, int count) {
 	scr_setPenColor((Color){0x7F, 0x7F, 0x7F});
 	
 	return count;
-}
-
-uint32_t sysWriteAt(const char * buf, uint64_t count, uint16_t x, uint16_t y, Color color) { //Todavía no lo usamos
-	scr_setPenPosition(x, y);
-	scr_setPenColor(color);
-	for (int i = 0; i < count; i++)
-		scr_printChar(buf[i]);
-	return scr_getPenX() | ((uint32_t)scr_getPenY() << 16);
 }
 
 void sysClear() {
@@ -109,4 +102,21 @@ void sysClearBuffer() {
 
 char sysCheckBuffer() {
   return kbd_checkBuffer();
+}
+
+
+int sysGetLevel() {
+  return getLevel();
+}
+
+void sysSetLevel(int level) {
+  setLevel(level);
+}
+
+void sysHolder(int time) {
+  holder(time);
+}
+
+void sysDrawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
+  scr_drawRect(x, y, width, height, color);
 }
