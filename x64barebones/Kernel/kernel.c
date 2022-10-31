@@ -9,6 +9,7 @@
 #include <interrupts.h>
 #include "./include/video.h"
 #include "./include/syscalls.h"
+#include <speaker.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -51,6 +52,10 @@ void * initializeKernelBinary() {
 int main() {
 	load_idt();
 	scr_clear();
+
+  beep(1000);
+  while(100000){};
+  nosound();
 
 	((EntryPoint)sampleCodeModuleAddress)();
 

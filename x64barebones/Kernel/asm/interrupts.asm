@@ -13,6 +13,10 @@ GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
 GLOBAL _irq80Handler
+GLOBAL _beep_start
+GLOBAL _beep_stop
+GLOBAL _inportb
+GLOBAL _outportb
 
 GLOBAL _exception0Handler
 GLOBAL _exception6Handler
@@ -245,6 +249,58 @@ _exception0Handler:
 
 _exception6Handler:
 	exceptionHandler 6
+
+_beep_start:
+	push rbp
+	mov rbp, rsp
+
+	mov al, 0xB6
+	out 43h,al
+
+	mov rbx, rdi
+	mov rax, 0
+	mov ax, bx
+
+	;mov ax, 1193 ;1193180 / nFrequence;
+	out 42h,al
+	mov al,ah
+	out 42h,al
+
+	in al, 61h ;lo esta apagando?
+ 	or al, 03h
+	out 61h,al
+
+	mov rsp, rbp
+	pop rbp
+	ret
+
+_beep_stop:
+  in al, 61h
+  and al, 0xFC
+  out 61, al
+  ret
+
+_inportb:
+  push rbp
+  mov rbp, rsp
+  mov rdx, rdi
+  mov rax, 0
+  in al, dx
+  mov rsp, rbp
+  pop rbp
+  ret
+
+_outportb:
+  push rbp
+  mov rbp, rsp
+  mov rax, rsi
+  mov rdx, rdi
+  ;mov al, dl
+  ;mov dx, si
+  out dx, al
+  mov rsp, rbp
+  pop rbp
+  ret
 
 haltcpu:
 	cli

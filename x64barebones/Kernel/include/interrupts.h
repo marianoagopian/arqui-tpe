@@ -35,4 +35,7 @@ void picSlaveMask(uint8_t mask);
 //Termina la ejecución de la cpu.
 void haltcpu(void);
 
+void _beep_start(uint16_t freq);
+void _beep_stop();
+
 #endif /* INTERRUPS_H_ */

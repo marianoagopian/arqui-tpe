@@ -357,3 +357,81 @@ make all
 make all
 make all
 make all
+cd root
+ls
+cd x64barebones/
+make all
+make all
+make all
+make all
+clean
+make clean
+clear
+make all
+make all
+make all
+make all
+make all
+make clean
+clear
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make clean
+make clean
+make all
+make all
+
+make clean
+clear
+make all
+clear
+make clean
+clear
+make all
+make clean
+make all
+clear
+make clean
+clear
+make all
+clear
+make clean
+clear
+make all
+clear
+make clean
+clear
+make all
+clear
+make clean
+make all
+make clean
+make all
+make clean
+make all
+make clean
+make all
+make clan
+make clean
+clear
+make all
+clear
+make clean
+make all
+make all
+make clean
+make all
+make clean
+clear
+make all
+make clean
+clear
+make all
+make clean
+clear
+make all

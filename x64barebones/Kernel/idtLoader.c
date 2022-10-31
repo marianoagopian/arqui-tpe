@@ -37,7 +37,6 @@ void load_idt() {
   //Para habilitar ambas 0xFC en masterMask
 	picMasterMask(0xFC);  
 	picSlaveMask(0xFF);  
-        
 	_sti();
 }
 
