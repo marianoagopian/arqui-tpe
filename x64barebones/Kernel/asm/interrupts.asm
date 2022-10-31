@@ -74,8 +74,6 @@ SECTION .text
 	pop rcx
 	pop rbx
 	pop rax
-	;pop $
-	;add rsp, 8
 %endmacro
 
 %macro irqHandlerMaster 1
@@ -96,7 +94,7 @@ SECTION .text
 %macro exceptionHandler 1
 	pushState
 
-  mov rsi, rsp
+  	mov rsi, rsp
 	mov rdi, %1 ; pasaje de parametro
 	call exceptionDispatcher
 
@@ -310,3 +308,4 @@ haltcpu:
 SECTION .bss
 	aux resq 1
 	reg resb 64
+	regdump	resq 17

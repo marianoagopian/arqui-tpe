@@ -109,26 +109,6 @@ int intToString(int num, char *buffer) {
     return i;
 }
 
-int hexToString(uint64_t num, char * buffer, int fixedLength) {
-    int i = 0;
-
-    for(int aux ; num > 0 ; i++, num/=16){
-        aux = num % 16;
-        if(aux >=0 && aux < 10)                     // convierto a hex
-            buffer[i] = aux + '0';
-        else
-            buffer[i] = aux - 10 + 'A';
-
-    }
-    while(i<fixedLength) {                   // le agrego 0 por deltante para llegar a la longitud deseada
-        buffer[i++] = '0';
-    }
-    reverseString(buffer,i);
-    buffer[i] = 0;
-
-    return i;
-}
-
 void printf(char *fmt,...){
     va_list ap; 
     char *p, *sval;
@@ -146,14 +126,7 @@ void printf(char *fmt,...){
         switch (*++p) {
             case 'd':
                 ival = va_arg(ap, int);
-                //*aux = {0};
                 len = intToString(ival, aux);
-                print(aux,len);
-                break;
-            case 'x':
-                ival  = va_arg(ap, int);
-                //*aux = {0};
-                len = hexToString(ival, aux, 16);
                 print(aux,len);
                 break;
             case 's':

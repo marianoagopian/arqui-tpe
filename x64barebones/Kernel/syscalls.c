@@ -8,8 +8,8 @@
 
 #define MAX_MEM_READ 16
 #define BYTE_LENGTH 2
-#define MAX_MEM_POS 0x7FFFFFFFF		/* F FFFF FFFFh tira page fault */
-#define MIN_MEM_POS 0x400000		/* Aca arranca Userland */
+#define MAX_MEM_POS 0x7FFFFFFFF		/* 7 FFFF FFFFh tira page fault 34359738367 en dec */
+#define MIN_MEM_POS 0x400000		/* Aca arranca Userland  4194304 en dec*/
 #define INVALID_POS -1
 
 static uint64_t infoReg[REGISTERS] = {0};
