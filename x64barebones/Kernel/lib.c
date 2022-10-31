@@ -95,7 +95,7 @@ int hexToString(uint64_t num, char * buffer, int fixedLength) {
 }
 
 static char * registerOrder[] = {
-	"RIP: ","RAX: ","RBX: ","RCX: ","RDX: ",
+	"RAX: ","RBX: ","RCX: ","RDX: ",
 	"RBP: ","RSI: ","RDI: ","R8:  ", 
 	"R9:  ","R10: ","R11: ","R12: ",
 	"R13: ","R14: ","R15: " 
