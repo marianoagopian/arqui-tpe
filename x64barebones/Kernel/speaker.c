@@ -6,6 +6,6 @@ void beep(uint32_t nFrequence) {
   _beep_start(1193180 / nFrequence);
 }
 
-void nosound() {
+void noSound() {
   _beep_stop();
 }

@@ -159,8 +159,6 @@ void scr_printChar(char c) {
 
     if (c == '\b') {
         if(penX < CHAR_WIDTH * 4){
-            //if(penY != 0) penY -= CHAR_HEIGHT;
-            //penX = (sysScreenSize() / 9 - 1) * 9;
             return;
         }
         penX -= CHAR_WIDTH * level;
@@ -188,9 +186,10 @@ void scr_printChar(char c) {
 }
 
 void scr_printNewline(void) {
-    penX = 0; // pen x is set to full left.
+    penX = 0; // Paramos penX en el borde izquierdo
 
     // If there is space for another line, we simply advance the pen y. Otherwise, we move up the entire screen and clear the lower part.
+    // Avanzamos pen y a la siguiente linea, si no hay lugar corremos toda la pantalla para arriba para dejar una nueva linea
     if (penY + (2*CHAR_HEIGHT * MAX_LEVEL) <= screenData->height) {
         penY += CHAR_HEIGHT * level;
     } else {

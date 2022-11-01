@@ -1,10 +1,12 @@
 #include <keyboard.h>
 #include <video.h>
+#include <stdint.h>
 #include <defs.h>
 #include <lib.h>
 #include <interrupts.h>
 #include <RTC.h>
 #include <time.h>
+#include <speaker.h>
 
 #define MAX_MEM_READ 16
 #define BYTE_LENGTH 2
@@ -115,6 +117,14 @@ void sysSetLevel(int level) {
 
 void sysHolder(int time) {
   holder(time);
+}
+
+void sysBeep(uint32_t frequence) {
+  beep(frequence);
+}
+
+void sysStop() {
+  noSound();
 }
 
 void sysDrawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {

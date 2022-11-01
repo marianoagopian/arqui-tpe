@@ -37,6 +37,8 @@ EXTERN sysCheckBuffer
 EXTERN sysSetLevel
 EXTERN sysHolder
 EXTERN sysGetLevel
+EXTERN sysBeep
+EXTERN sysStop
 
 SECTION .text
 
@@ -172,6 +174,8 @@ _irq80Handler:
 	je sys_time
 	cmp rax, 4
 	je sys_clear_screan
+  cmp rax, 5
+  je sys_beep
 	cmp rax, 6
 	je sys_printmem
 	cmp rax, 7
@@ -186,6 +190,8 @@ _irq80Handler:
 	je sys_set_level
   cmp rax, 12
 	je sys_get_level
+  cmp rax, 13
+  je sys_stop
 	jmp continue
 
 continue:
@@ -239,6 +245,14 @@ sys_holder:
 
 sys_get_level:
   call sysGetLevel
+  jmp continue
+
+sys_beep:
+  call sysBeep
+  jmp continue
+
+sys_stop:
+  call sysStop
   jmp continue
 
 ;Zero Division Exception
