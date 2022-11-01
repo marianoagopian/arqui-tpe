@@ -263,34 +263,39 @@ _exception6Handler:
 	exceptionHandler 6
 
 _beep_start:
-	push rbp
-	mov rbp, rsp
+    push rbp
+    mov rbp, rsp
 
-	mov al, 0xB6
-	out 43h,al
+    mov al, 0xB6
+    out 43h,al
 
-	mov rbx, rdi
-	mov rax, 0
-	mov ax, bx
+    mov rbx, rdi
+    mov rax, 0
+    mov ax, bx
 
-	;mov ax, 1193 ;1193180 / nFrequence;
-	out 42h,al
-	mov al,ah
-	out 42h,al
+    out 42h,al
+    mov al,ah
+    out 42h,al
 
-	in al, 61h ;lo esta apagando?
- 	or al, 03h
-	out 61h,al
+    in al, 61h 
+    or al, 03h 
+    out 61h,al
 
-	mov rsp, rbp
-	pop rbp
-	ret
+    mov rsp, rbp
+    pop rbp
+    ret
 
 _beep_stop:
-  in al, 61h
-  and al, 0xFC
-  out 61, al
-  ret
+    push rbp
+    mov rbp, rsp
+
+    in al, 61h
+    and al, 0xFC
+    out 61h, al
+
+    mov rsp, rbp
+    pop rbp
+    ret
 
 haltcpu:
 	cli

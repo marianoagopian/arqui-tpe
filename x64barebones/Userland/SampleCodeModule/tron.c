@@ -21,7 +21,7 @@ void resetPositionsArray();
 void tron() {
   clearScreen();
 
-  printf("Welcome to Tron! player 1 (magenta color) will use the keys WASD to move while player 2 (yellow color) will use the arrows keys\n\n\n");
+  printf("Welcome to Tron! player 1 (green color) will use the keys WASD to move while player 2 (white color) will use the arrows keys\n\n\n");
 
   printf("Press the key 'b' to begin\n");
 
@@ -49,8 +49,8 @@ void tron() {
     positions[y1/4][x1/4] = 1; //al atravesar el punto, marcamos esa posicion para que termine el juego si volvemos a pasar
     positions[y2/4][x2/4] = 1;
 
-    sys_draw_rect(x1,y1,4,4,magenta); 
-    sys_draw_rect(x2,y2,4,4,yellow);
+    sys_draw_rect(x1,y1,4,4,green); 
+    sys_draw_rect(x2,y2,4,4,white);
     moveCharacter(playerOneDirection, &x1, &y1);
     moveCharacter(playerTwoDirection, &x2, &y2);
 
@@ -68,8 +68,9 @@ void tron() {
       isPlaying = 0;
     }
   }
+  
   sys_beep(440);
-  sys_holder(4);
+  sys_holder(6);
   sys_stop();
   clearScreen();
 

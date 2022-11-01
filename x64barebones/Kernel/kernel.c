@@ -53,10 +53,6 @@ int main() {
 	load_idt();
 	clean_screen();
 
-  //beep(1000);
-  //while(100000){};
-  //nosound();
-
 	((EntryPoint)sampleCodeModuleAddress)();
 
 	while(1){

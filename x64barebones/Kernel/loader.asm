@@ -10,7 +10,7 @@ loader:
 	call main
 resetmain:
 	call getStackBase
-mn:	mov rsp, rax				; Set up the stack with the returned address
+  mov rsp, rax				; Set up the stack with the returned address
 	call main
 hang:
 	cli

@@ -64,7 +64,29 @@ int _start() {
 
 	printf("Loading Real Betis Balompie SO...\n");
 
-	sys_holder(30);
+  sys_beep(392);
+  sys_holder(6);
+  sys_beep(440);
+  sys_holder(4);
+  sys_beep(494);
+  sys_holder(6);
+  sys_beep(440);
+  sys_holder(4);
+  sys_beep(494);
+  sys_holder(6);
+  sys_beep(440);
+  sys_holder(4);
+  sys_beep(494);
+  sys_holder(6);
+  sys_beep(440);
+  sys_holder(4);
+  sys_beep(494);
+  sys_holder(5);
+  sys_beep(587);
+  sys_holder(5);
+  sys_beep(440);
+  sys_holder(6);
+  sys_stop();
 
 	return main();
 
