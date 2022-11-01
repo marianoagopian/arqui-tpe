@@ -8,6 +8,8 @@
 /* The height of a character in pixels. */
 #define CHAR_HEIGHT 16
 
+#define MAX_LEVEL 3
+
 typedef struct {
 	uint8_t b;
 	uint8_t g;

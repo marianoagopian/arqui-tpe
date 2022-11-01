@@ -112,7 +112,7 @@ static void level1(const char *data){
 static void level2(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
     	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-      Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
+        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
     	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos2[0] = penColor, pos2[1] = penColor;
     	if (*data & 0x02) pos[2] = penColor, pos[3] = penColor, pos2[2] = penColor, pos2[3] = penColor;
     	if (*data & 0x04) pos[4] = penColor, pos[5] = penColor, pos2[4] = penColor, pos2[5] = penColor;
@@ -123,6 +123,25 @@ static void level2(const char *data){
     	if (*data & 0x80) pos[14] = penColor, pos[15] = penColor, pos2[14] = penColor, pos2[15] = penColor;
     	data++;
     	if (*data & 0x01) pos[16] = penColor, pos[17] = penColor, pos2[16] = penColor, pos2[17] = penColor;
+    	data++;
+    }
+}
+
+static void level3(const char *data){
+    for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
+    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
+        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
+        Color* pos3 = (Color*)getPtrToPixel(penX, penY+h+2);
+    	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos[2] = penColor, pos2[0] = penColor, pos2[1] = penColor, pos2[2] = penColor, pos3[0] = penColor, pos3[1] = penColor, pos3[2] = penColor;
+    	if (*data & 0x02) pos[3] = penColor, pos[4] = penColor, pos[5] = penColor, pos2[3] = penColor, pos2[4] = penColor, pos2[5] = penColor, pos3[3] = penColor, pos3[4] = penColor, pos3[5] = penColor;
+    	if (*data & 0x04) pos[6] = penColor, pos[7] = penColor, pos[8] = penColor, pos2[6] = penColor, pos2[7] = penColor, pos2[8] = penColor, pos3[6] = penColor, pos3[7] = penColor, pos3[8] = penColor;
+    	if (*data & 0x08) pos[9] = penColor, pos[10] = penColor, pos[11] = penColor, pos2[9] = penColor, pos2[10] = penColor, pos2[11] = penColor, pos3[9] = penColor, pos3[10] = penColor, pos3[11] = penColor;
+    	if (*data & 0x10) pos[12] = penColor, pos[13] = penColor, pos[14] = penColor, pos2[12] = penColor, pos2[13] = penColor, pos2[14] = penColor, pos3[12] = penColor, pos3[13] = penColor, pos3[14] = penColor;
+    	if (*data & 0x20) pos[15] = penColor, pos[16] = penColor, pos[17] = penColor, pos2[15] = penColor, pos2[16] = penColor, pos2[17] = penColor, pos3[15] = penColor, pos3[16] = penColor, pos3[17] = penColor;
+    	if (*data & 0x40) pos[18] = penColor, pos[19] = penColor, pos[20] = penColor, pos2[18] = penColor, pos2[19] = penColor, pos2[20] = penColor, pos3[18] = penColor, pos3[19] = penColor, pos3[20] = penColor;
+    	if (*data & 0x80) pos[21] = penColor, pos[22] = penColor, pos[23] = penColor, pos2[21] = penColor, pos2[22] = penColor, pos2[23] = penColor, pos3[21] = penColor, pos3[22] = penColor, pos3[23] = penColor;
+    	data++;
+    	if (*data & 0x01) pos[24] = penColor, pos[25] = penColor, pos[26] = penColor, pos2[24] = penColor, pos2[25] = penColor, pos2[26] = penColor, pos3[24] = penColor, pos3[25] = penColor, pos3[26] = penColor;
     	data++;
     }
 }
@@ -158,6 +177,9 @@ void scr_printChar(char c) {
         if(level == 2){
             level2(data);
         }
+        if(level == 3){
+            level3(data);
+        }
     }
 
     penX += CHAR_WIDTH * level;
@@ -169,7 +191,7 @@ void scr_printNewline(void) {
     penX = 0; // pen x is set to full left.
 
     // If there is space for another line, we simply advance the pen y. Otherwise, we move up the entire screen and clear the lower part.
-    if (penY + (2*CHAR_HEIGHT * level) <= screenData->height) {
+    if (penY + (2*CHAR_HEIGHT * MAX_LEVEL) <= screenData->height) {
         penY += CHAR_HEIGHT * level;
     } else {
         void* dst = (void*)((uint64_t)screenData->framebuffer);

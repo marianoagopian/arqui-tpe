@@ -6,7 +6,7 @@
 
 static char * invalidArgument = "Invalid argument!\nArgument must be number!\n";
 static char * invalidMemoryAddress = "Invalid memory address!\n";
-static char * noArgument = "For this function argument is necesary\n";
+static char * noArgument = "For this function argument is necessary\n";
 
 
 static uint64_t atoi(const char * string);

@@ -1,7 +1,7 @@
 #ifndef _COMMANDS_H_
 #define _COMMANDS_H_
 
-#define COMMANDS_QTY 10
+#define COMMANDS_QTY 9
 #define PARAMETER_LENGTH 10
 #define BUFFER_LENGTH 32
 
@@ -13,13 +13,11 @@ void callFunction(char * command, char * parameter);
 
 void sys_clear_screen();
 
-void decreaseFontSize();
+void changefontsize(char *par);
 
 void divByZero();
 
 void help();
-
-void increaseFontSize();
 
 void inforeg();
 
