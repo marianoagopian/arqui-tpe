@@ -3,6 +3,7 @@
     "syscalls.h": "c",
     "functions.h": "c",
     "color.h": "c",
-    "commands.h": "c"
+    "commands.h": "c",
+    "interrupts.h": "c"
   }
 }

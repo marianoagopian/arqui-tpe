@@ -68,8 +68,9 @@ void tron() {
       isPlaying = 0;
     }
   }
+
   sys_beep(440);
-  sys_holder(4);
+  sys_holder(10);
   sys_stop();
   clearScreen();
 
