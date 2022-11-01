@@ -18,23 +18,23 @@ typedef struct {
 
 
 /* Clears the whole screen to black. */
-void scr_clear(void);
+void clean_screen(void);
 
 /* Sets a specified rectangle of pixels on the screen to the specified color. */
-void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);
+void drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);
 
 /* Sets the pen color for drawing characters on the screen as a console. */
-void scr_setPenColor(Color color);
+void setScreenPrintColor(Color color);
 
 /* Advances the pen to the beginning of the next line. */
-void scr_printNewline(void);
+void printNewline(void);
 
 /* Prints a single character with the pen, wrapping around the end of the screen and pushing old lines up if necessary. */
-void scr_printChar(char c);
+void printChar(char c);
 
 /* Prints a string of characters with the pen, wrapping around the end of the screen and pushing old lines up if necessary.
 Returns the new pen position as a 32 bit number, where the 16 lowest bits are the x and the upper 16 bits are the y. */
-uint32_t scr_print(const char* s);
+uint32_t printScreen(const char* s);
 
 int getLevel();
 

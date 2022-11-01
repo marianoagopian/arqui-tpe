@@ -7,7 +7,7 @@
 #define STDIN 0
 #define STDOUT 1
 #define STDERR 2
-//#define KBDIN 3
+
 
 /* The width of a character in pixels. */
 #define CHAR_WIDTH 9

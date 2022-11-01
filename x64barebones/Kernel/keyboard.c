@@ -35,7 +35,7 @@ void keyboard_handler(uint64_t * regDumpPos) {
   }
 }
 
-unsigned int kbd_readCharacters(char* buf, unsigned int n) {
+unsigned int readKeyboardCharacters(char* buf, unsigned int n) {
   _cli();
   unsigned int charsRead = 0;
   unsigned int scancodeIndex;
@@ -51,7 +51,7 @@ unsigned int kbd_readCharacters(char* buf, unsigned int n) {
   return charsRead;
 }
 
-void kbd_clearBuffer() {
+void cleanKeyboardBuffer() {
   for(int i = 0 ; i < writePos ; i++){
     keyBuffer[i] = 0;
   } 
@@ -59,7 +59,7 @@ void kbd_clearBuffer() {
   index = 0;
 }
 
-char kbd_checkBuffer() {
+char checkKeyboardBuffer() {
   if(index < writePos) {
     return keyBuffer[index++];
   }

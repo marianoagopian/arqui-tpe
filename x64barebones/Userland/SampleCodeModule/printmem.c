@@ -15,7 +15,7 @@ uint8_t isNum(const char * string);
 
 void printmem(char * arg) {
     if(*arg == 0) {
-        print(noArgument, strlen(noArgument));
+        print(noArgument, strlen(noArgument)); //si no pasaron parametro enviamos el mensaje
         return;
     }
     if(!isNum(arg)) {                                            // recibe un string que puede o no ser un numero

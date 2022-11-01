@@ -48,22 +48,22 @@ static void* getPtrToPixel(uint16_t x, uint16_t y) {
     return (void*)(screenData->framebuffer + 3 * (x + (y * (uint64_t)screenData->width)));
 }
 
-uint16_t penX = 0, penY = 0;
+uint16_t posX = 0, posY = 0;
 Color penColor = {0x7F, 0x7F, 0x7F};
 
-void scr_setPenColor(Color color) {
+void setScreenPrintColor(Color color) {
   penColor = color;
 }
 
-void scr_clear(void) {
+void clean_screen(void) {
     uint8_t* pos = (uint8_t*)((uint64_t)screenData->framebuffer);
     for (uint32_t len = 3 * (uint32_t)screenData->width * screenData->height; len; len--, pos++)
         *pos = 0;
-    penX = 0;
-    penY = 0;
+    posX = 0;
+    posY = 0;
 }
 
-void scr_drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
+void drawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
     if (x >= screenData->width || y >= screenData->height)
         return;
     
@@ -94,7 +94,7 @@ int getLevel() {
 
 static void level1(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h++) {
-    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
+    	Color* pos = (Color*)getPtrToPixel(posX, posY+h);
     	if (*data & 0x01) pos[0] = penColor;
     	if (*data & 0x02) pos[1] = penColor;
     	if (*data & 0x04) pos[2] = penColor;
@@ -111,8 +111,8 @@ static void level1(const char *data){
 
 static void level2(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
-    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
+    	Color* pos = (Color*)getPtrToPixel(posX, posY+h);
+        Color* pos2 = (Color*)getPtrToPixel(posX, posY+h+1);
     	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos2[0] = penColor, pos2[1] = penColor;
     	if (*data & 0x02) pos[2] = penColor, pos[3] = penColor, pos2[2] = penColor, pos2[3] = penColor;
     	if (*data & 0x04) pos[4] = penColor, pos[5] = penColor, pos2[4] = penColor, pos2[5] = penColor;
@@ -129,9 +129,9 @@ static void level2(const char *data){
 
 static void level3(const char *data){
     for (int h=0; h<CHAR_HEIGHT * level; h+=level) {
-    	Color* pos = (Color*)getPtrToPixel(penX, penY+h);
-        Color* pos2 = (Color*)getPtrToPixel(penX, penY+h+1);
-        Color* pos3 = (Color*)getPtrToPixel(penX, penY+h+2);
+    	Color* pos = (Color*)getPtrToPixel(posX, posY+h);
+        Color* pos2 = (Color*)getPtrToPixel(posX, posY+h+1);
+        Color* pos3 = (Color*)getPtrToPixel(posX, posY+h+2);
     	if (*data & 0x01) pos[0] = penColor, pos[1] = penColor, pos[2] = penColor, pos2[0] = penColor, pos2[1] = penColor, pos2[2] = penColor, pos3[0] = penColor, pos3[1] = penColor, pos3[2] = penColor;
     	if (*data & 0x02) pos[3] = penColor, pos[4] = penColor, pos[5] = penColor, pos2[3] = penColor, pos2[4] = penColor, pos2[5] = penColor, pos3[3] = penColor, pos3[4] = penColor, pos3[5] = penColor;
     	if (*data & 0x04) pos[6] = penColor, pos[7] = penColor, pos[8] = penColor, pos2[6] = penColor, pos2[7] = penColor, pos2[8] = penColor, pos3[6] = penColor, pos3[7] = penColor, pos3[8] = penColor;
@@ -146,23 +146,23 @@ static void level3(const char *data){
     }
 }
 
-void scr_printChar(char c) {
+void printChar(char c) {
     if(c == 0){
         return;
     }
     if (c == '\n') {
-        scr_printNewline();
+        printNewline();
         return;
     }
 
     Color black = {0x00, 0x00, 0x00};
 
     if (c == '\b') {
-        if(penX < CHAR_WIDTH * 4){
+        if(posX < CHAR_WIDTH * 4){ // para impedir que borre el >$:
             return;
         }
-        penX -= CHAR_WIDTH * level;
-        scr_drawRect(penX, penY, CHAR_WIDTH * level, CHAR_HEIGHT * level, black);
+        posX -= CHAR_WIDTH * level; //retrocedemos un caracter
+        drawRect(posX, posY, CHAR_WIDTH * level, CHAR_HEIGHT * level, black);
         return;
     }
 
@@ -180,18 +180,17 @@ void scr_printChar(char c) {
         }
     }
 
-    penX += CHAR_WIDTH * level;
-    if (penX > screenData->width - level * CHAR_WIDTH)
-        scr_printNewline();
+    posX += CHAR_WIDTH * level;
+    if (posX > screenData->width - level * CHAR_WIDTH)
+        printNewline();
 }
 
-void scr_printNewline(void) {
-    penX = 0; // Paramos penX en el borde izquierdo
+void printNewline(void) {
+    posX = 0; // Paramos posX en el borde izquierdo
 
-    // If there is space for another line, we simply advance the pen y. Otherwise, we move up the entire screen and clear the lower part.
     // Avanzamos pen y a la siguiente linea, si no hay lugar corremos toda la pantalla para arriba para dejar una nueva linea
-    if (penY + (2*CHAR_HEIGHT * MAX_LEVEL) <= screenData->height) {
-        penY += CHAR_HEIGHT * level;
+    if (posY + (2*CHAR_HEIGHT * MAX_LEVEL) <= screenData->height) {
+        posY += CHAR_HEIGHT * level;
     } else {
         void* dst = (void*)((uint64_t)screenData->framebuffer);
         void* src = (void*)(dst + 3 * (CHAR_HEIGHT * level * (uint64_t)screenData->width));
@@ -201,8 +200,8 @@ void scr_printNewline(void) {
     }
 }
 
-uint32_t scr_print(const char* s) {
+uint32_t printScreen(const char* s) {
     for (; *s != 0; s++)
-		  scr_printChar(*s);
-    return penX | ((uint32_t)penY << 16);
+		  printChar(*s);
+    return posX | ((uint32_t)posY << 16);
 }

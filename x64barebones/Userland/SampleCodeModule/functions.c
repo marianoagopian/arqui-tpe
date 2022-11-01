@@ -41,24 +41,24 @@ void scanf(char* readbuf, uint64_t maxlen) {
     if (maxlen == 0)
         return;
 
-    // We read up to maxlen-1 characters from the input.
+    // Leemos hasta maxlen-1 caracteres
     uint64_t count = 0;
     do {
         char c = getChar();
 
-        if (c == '\n') { // If a '\n' is found, we zero-terminate the string and return.
+        if (c == '\n') { // Si llegamos hasta \n termino el string
             readbuf[MIN(count, maxlen-1)] = '\0';
             print(&c, 1);
             return;
         } 
-        if (c == '\b'){
+        if (c == '\b'){ 
             if (count != 0){
                 count--;
             }
             print(&c, 1);
         }
          else {
-            //We add the read character to the buffer and continue.
+            //Agregamos el caracter al buffer 
 	        print(&c, 1);
             if (count < maxlen-1 && c != 0) {
                 readbuf[count] = c;
@@ -109,11 +109,10 @@ int intToString(int num, char *buffer) {
     return i;
 }
 
-void printf(char *fmt,...){
+void printf(char *fmt,...){     //funcion de print con funcionalidad similar a la brindada por stdio.h
     va_list ap; 
     char *p, *sval;
     int ival;
-    //double dval;
 
     va_start(ap, fmt);
     char *aux = {0};

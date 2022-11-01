@@ -47,6 +47,8 @@ char *escudoBetis =
 "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n"
 ;
 
+//aguante el Betis
+
 extern char bss;
 extern char endOfBinary;
 
@@ -55,12 +57,12 @@ int main();
 void * memset(void * destiny, int32_t c, uint64_t length);
 
 int _start() {
-	//Clean BSS
+	//Limpiamos BSS
 	memset(&bss, 0, &endOfBinary - &bss);
 
 	printf(escudoBetis);
 
-	printf("Cargando Real Betis Balompie SO...\n");
+	printf("Loading Real Betis Balompie SO...\n");
 
 	sys_holder(30);
 

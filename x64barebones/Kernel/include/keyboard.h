@@ -22,10 +22,10 @@ extern char getKey();
  */
 void keyboard_handler();
 
-unsigned int kbd_readCharacters(char* buf, unsigned int n);
+unsigned int readKeyboardCharacters(char* buf, unsigned int n);
 
-void kbd_clearBuffer();
+void cleanKeyboardBuffer();
 
-char kbd_checkBuffer();
+char checkKeyboardBuffer();
 
 #endif

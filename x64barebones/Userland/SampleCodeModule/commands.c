@@ -11,7 +11,7 @@ void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH],
 	int i, j;
 	
 	for(i=0, j=0; i<BUFFER_LENGTH && readbuf[i] != ' '; i++){
-			command[j++] = readbuf[i];
+			command[j++] = readbuf[i]; // pasamos el buffer al nombre del comando
 	}
 
 	command[j] = 0;
@@ -24,7 +24,7 @@ void checkCommand(char command[BUFFER_LENGTH], char parameter[PARAMETER_LENGTH],
 		if(j >= PARAMETER_LENGTH) {
 			return;
 		}
-		parameter[j++] = readbuf[i++];
+		parameter[j++] = readbuf[i++]; // pasamos el parametro a parameter
 	}
 	parameter[j] = 0;
 }
@@ -45,7 +45,7 @@ void callFunction(char * command, char * parameter) {
     	print(PARAMETERS_ERROR, strlen(PARAMETERS_ERROR));
     return;
   	}
-	switch (functionIndex) {
+	switch (functionIndex) {  // buscamos el comando en el vector de comandos
     case 0:
     sys_clear_screen();
       break;

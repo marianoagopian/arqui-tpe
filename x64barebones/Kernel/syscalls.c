@@ -10,8 +10,8 @@
 
 #define MAX_MEM_READ 16
 #define BYTE_LENGTH 2
-#define MAX_MEM_POS 0x7FFFFFFFF		/* 7 FFFF FFFFh tira page fault 34359738367 en dec */
-#define MIN_MEM_POS 0x400000		/* Aca arranca Userland  4194304 en dec*/
+#define MAX_MEM_POS 0x7FFFFFFFF		/* 7 FFFF FFFFh tira page fault (34359738367 en dec )*/
+#define MIN_MEM_POS 0x400000		/* Aca arranca Userland  (4194304 en dec)*/
 #define INVALID_POS -1
 
 static uint64_t infoReg[REGISTERS] = {0};
@@ -28,24 +28,24 @@ int sysWrite(int fd, char * buf, int count) {
     return 0;
   }
   if (fd == STDERR) {
-    scr_setPenColor((Color){0x00, 0x00, 0xFF});
+    setScreenPrintColor((Color){0x00, 0x00, 0xFF});
   }
 	for (int i = 0; i < count; i++)
-		scr_printChar(buf[i]);
-	scr_setPenColor((Color){0x7F, 0x7F, 0x7F});
+		printChar(buf[i]);
+	setScreenPrintColor((Color){0x7F, 0x7F, 0x7F});
 	
 	return count;
 }
 
 void sysClear() {
-  scr_clear();
+  clean_screen();
 }
 
 unsigned int sysRead(unsigned int fd, char * buf, unsigned int count){
 	unsigned int totalRead = 0;
 	do {
 			_hlt();
-			totalRead += kbd_readCharacters(buf + totalRead, count - totalRead);
+			totalRead += readKeyboardCharacters(buf + totalRead, count - totalRead);
 		} while (totalRead == 0);
 
 	return totalRead;
@@ -99,11 +99,11 @@ unsigned int sysPrintmem(uint64_t position, char * buffer) {
 }
 
 void sysClearBuffer() {
-  kbd_clearBuffer();
+  cleanKeyboardBuffer();
 }
 
 char sysCheckBuffer() {
-  return kbd_checkBuffer();
+  return checkKeyboardBuffer();
 }
 
 
@@ -128,5 +128,5 @@ void sysStop() {
 }
 
 void sysDrawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color) {
-  scr_drawRect(x, y, width, height, color);
+  drawRect(x, y, width, height, color);
 }

@@ -10,7 +10,7 @@
 #define HEIGHT 768
 #define WIDTH 1024
 
-static char positions[HEIGHT/4][WIDTH/4] = {{0}};
+static char positions[HEIGHT/4][WIDTH/4] = {{0}}; //
 
 void setInitialPositions(int * x1, int * y1, int * x2, int * y2, int * playerOneDirection, int * playerTwoDirection);
 void parsePositions(char scancode, int * playerOneDirection, int * playerTwoDirection);
@@ -30,7 +30,7 @@ void tron() {
   }
 
   clearScreen();
-  sys_clear_buffer();
+  sys_clear_buffer();  // limpiamos el buffer para que las letras previamente tocadas no influyan en el juego
 
   int playerOneDirection = RIGHT;
   int playerTwoDirection = LEFT;
@@ -42,25 +42,25 @@ void tron() {
 
   while (isPlaying){
     newDirection = sys_check_buffer();
-    parsePositions(newDirection, &playerOneDirection, &playerTwoDirection);
+    parsePositions(newDirection, &playerOneDirection, &playerTwoDirection);  // leemos el buffer y interpretamos la direccion a partir de la tecla presionada
 
-    sys_holder(1);
+    sys_holder(1); // bajamos la velocidad en la cual se pintan las lineas
 
-    positions[y1/4][x1/4] = 1;
+    positions[y1/4][x1/4] = 1; //al atravesar el punto, marcamos esa posicion para que termine el juego si volvemos a pasar
     positions[y2/4][x2/4] = 1;
 
-    sys_draw_rect(x1,y1,4,4,magenta);
+    sys_draw_rect(x1,y1,4,4,magenta); 
     sys_draw_rect(x2,y2,4,4,yellow);
     moveCharacter(playerOneDirection, &x1, &y1);
     moveCharacter(playerTwoDirection, &x2, &y2);
 
     if(positions[y1/4][x1/4] == 1 || x1 <= 0 || x1 >= WIDTH || y1 <= 0 || y1 >= HEIGHT) {
-      won = 2;
+      won = 2; 
       isPlaying = 0;
     }
 
     if(positions[y2/4][x2/4] == 1 || x2 <= 0 || x2 >= WIDTH || y2 <= 0 || y2 >= HEIGHT) {
-      if(positions[y1/4][x1/4] == 1) {
+      if(positions[y1/4][x1/4] == 1) { //si perdieron ambos al mismo tiempo
         won = 0;
       } else {
         won = 1;
@@ -68,9 +68,8 @@ void tron() {
       isPlaying = 0;
     }
   }
-
   sys_beep(440);
-  sys_holder(10);
+  sys_holder(4);
   sys_stop();
   clearScreen();
 
@@ -80,13 +79,13 @@ void tron() {
     printf("Player %d has won, press the key 'c' to continue\n", won);
   }
 
-  while(getChar() != 'c') {
+  while(getChar() != 'c') { //esperamos a que se presione la tecla c para continuar
     ;
   }
 
 
   sys_clear_buffer();
-  resetPositionsArray();
+  resetPositionsArray(); //reiniciamos la matriz para poder volver a jugar
   clearScreen();
 }
 
@@ -100,28 +99,28 @@ void resetPositionsArray() {
 
 void parsePositions(char scancode, int * playerOneDirection, int * playerTwoDirection) {
   switch (scancode) {
-    case 0x11:
+    case 0x11: //w
       setNewDirection(playerOneDirection, UP);
       break;
-    case 0x1E:
+    case 0x1E: //a
       setNewDirection(playerOneDirection, LEFT);
       break;
-    case 0x1F:
+    case 0x1F: //s
       setNewDirection(playerOneDirection, DOWN);
       break;
-    case 0x20:
+    case 0x20: //d
       setNewDirection(playerOneDirection, RIGHT);
       break;
-    case 0x48:
+    case 0x48: //flecha para arriba
       setNewDirection(playerTwoDirection, UP);
       break;
-    case 0x4B:
+    case 0x4B: //flecha para la izquierda
       setNewDirection(playerTwoDirection, LEFT);
       break;
-    case 0x50:
+    case 0x50: // flecha para la izquierda
       setNewDirection(playerTwoDirection, DOWN);
       break;
-    case 0x4D:
+    case 0x4D: //flecha para la derecha
       setNewDirection(playerTwoDirection, RIGHT);
       break;
     default:
@@ -136,7 +135,7 @@ void setNewDirection(int * currentDirection, int newDirection) {
   *currentDirection = newDirection;
 }
 
-void moveCharacter(int currentDirection, int * x, int * y) {
+void moveCharacter(int currentDirection, int * x, int * y) { //movemos en la direccion ya determinada
     if (currentDirection == RIGHT) {
         *x += 4;
     } else if (currentDirection == LEFT) {

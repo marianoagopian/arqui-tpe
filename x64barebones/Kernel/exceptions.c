@@ -39,12 +39,12 @@ static void handlerException(char * msg, uint64_t * registerDumpPos) {
   printRegisters(registerDumpPos);
   sysWrite(STDERR, "Press any key to continue.", _strlen("Press any key to continue"));
 
-  kbd_clearBuffer();
+  cleanKeyboardBuffer();
   char *aux = {0};
   do { _hlt(); sysRead(STDOUT, aux, 2); } while(*aux == 0);
 
-  kbd_clearBuffer();
-  scr_clear();
+  cleanKeyboardBuffer();
+  clean_screen();
   _cli();
   resetmain();
 }

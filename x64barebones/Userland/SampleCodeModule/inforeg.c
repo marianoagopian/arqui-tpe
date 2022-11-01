@@ -24,10 +24,10 @@ int hexToString(uint64_t num, char * buffer, int fixedLength) {
             buffer[i] = aux - 10 + 'A';
 
     }
-    while(i<fixedLength) {                   // le agrego 0 por deltante para llegar a la longitud deseada
+    while(i<fixedLength) {                   // le agrego 0 por delante para llegar a la longitud deseada
         buffer[i++] = '0';
     }
-    reverseString(buffer,i);
+    reverseString(buffer,i); //como lo recorremos al reves, tenemos que darlo vuelta
     buffer[i] = 0;
 
     return i;
@@ -37,7 +37,7 @@ void infoReg() {
     char stringBuffer[BUFF_SIZE];
     uint64_t regBuffer[REGISTERS];
 
-    if(sys_info_reg(regBuffer) == 0){
+    if(sys_info_reg(regBuffer) == 0){ // si no tocamos la tecla antes imprimo unicamente el mensaje
         printf("%s\n", regBuffer);
         return;
     }

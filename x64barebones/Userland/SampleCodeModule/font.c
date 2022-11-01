@@ -5,16 +5,16 @@
 static char * noArgument = "For this function argument is necessary\n";
 
 
-int my_getnbr(char *str){
+int strToNum(char *str){
   int result;
-  int puiss;
+  int sign;
 
   result = 0;
-  puiss = 1;
+  sign = 1;
   while (('-' == (*str)) || ((*str) == '+'))
   {
       if (*str == '-')
-        puiss = puiss * -1;
+        sign = sign * -1; // cambiamos el signo si es negativo
       str++;
   }
   while ((*str >= '0') && (*str <= '9'))
@@ -22,7 +22,7 @@ int my_getnbr(char *str){
       result = (result * 10) + ((*str) - '0');
       str++;
   }
-  return (result * puiss);
+  return (result * sign);
 }
 
 void changefontsize(char *par){
@@ -30,7 +30,7 @@ void changefontsize(char *par){
     print(noArgument, strlen(noArgument));
     return;
   }
-  int level = my_getnbr(par);
+  int level = strToNum(par);
   if(level < 1 || level > 3){
     printf("The parameter must be a number between 1 and 3\n");
     return;
