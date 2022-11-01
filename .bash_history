@@ -435,3 +435,21 @@ make all
 make clean
 clear
 make all
+cd root/
+cd x64barebones/
+make all
+make all
+make clean
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all
+make all

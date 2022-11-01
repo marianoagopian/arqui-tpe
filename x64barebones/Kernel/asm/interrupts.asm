@@ -278,28 +278,6 @@ _beep_stop:
   out 61, al
   ret
 
-_inportb:
-  push rbp
-  mov rbp, rsp
-  mov rdx, rdi
-  mov rax, 0
-  in al, dx
-  mov rsp, rbp
-  pop rbp
-  ret
-
-_outportb:
-  push rbp
-  mov rbp, rsp
-  mov rax, rsi
-  mov rdx, rdi
-  ;mov al, dl
-  ;mov dx, si
-  out dx, al
-  mov rsp, rbp
-  pop rbp
-  ret
-
 haltcpu:
 	cli
 	hlt

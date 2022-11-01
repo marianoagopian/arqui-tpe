@@ -12,3 +12,5 @@
 
 #Bash script
 *.sh
+
+.bash_history

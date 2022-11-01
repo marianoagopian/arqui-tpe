@@ -60,7 +60,7 @@ void saveInfoReg(uint64_t * regDumpPos) {
 
 int sysInfoReg(uint64_t * buffer) {
 	if(hasScreenshoted == 0){
-		char *aux = "Press the ; button before calling InfoReg";
+		char *aux = "Press the ESCAPE button before calling inforeg";
 		memcpy(buffer, aux, _strlen(aux));
 		return 0;
 	}
@@ -86,11 +86,11 @@ unsigned int sysPrintmem(uint64_t position, char * buffer) {
 	uint64_t current;
 	
 	for(int i=0, k=0; i < MAX_MEM_READ; i++) {
-		if(i!=0 && i%4==0)
+		if(i!=0 && i%4==0) {
 			buffer[k++] = ' ';
-
-       	current = *((uint8_t * )position + i);
-        k += hexToString(current, buffer + k, BYTE_LENGTH);
+    }
+    current = *((uint8_t * )position + i);
+    k += hexToString(current, buffer + k, BYTE_LENGTH);
 	}
 
 	return 0;

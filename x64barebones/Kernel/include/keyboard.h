@@ -6,7 +6,7 @@
 #include <syscalls.h>
 
 /* --- CONSTANTS  --- */
-#define SEMICOLON 19
+#define ESCAPE 19
 
 extern char getKey();
 
